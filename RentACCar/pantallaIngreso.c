@@ -6,131 +6,235 @@
 #include <windows.h>
 #include "login.h"
 
-//variables globales
-#define MAX_USERNAME 50
-#define MAX_PASSWORD 50
 
 
-// Pantalla de bienvenida
+// Función para posicionar el cursor en la consola
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+// Función para cambiar el color de fondo y texto
+void setColor(int textColor, int bgColor) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor << 4)));
+}
+// centrar un cuadro en la consola
+void dibujarCuadro(int x1, int y1, int x2, int y2) {
+    int i;
+    for (i = x1; i <= x2; i++) {
+        gotoxy(i, y1);
+        printf("-");
+        gotoxy(i, y2);
+        printf("-");
+    }
+    for (i = y1; i <= y2; i++) {
+        gotoxy(x1, i);
+        printf("|");
+        gotoxy(x2, i);
+        printf("|");
+    }
+    gotoxy(x1, y1); printf("+");
+    gotoxy(x2, y1); printf("+");
+    gotoxy(x1, y2); printf("+");
+    gotoxy(x2, y2); printf("+");
+}
+
 void pantallaBienvenida() {
-    char opcion;
+    int opcion = 0;
+    int num_opciones = 2;
+    char tecla;
     setColor(7, 8); // Texto blanco, fondo gris
-    system("cls");
 
-    gotoxy(30, 5);
-    printf("========================================\n");
-    gotoxy(30, 6);
-    printf("           Bienvenido al Sistema         \n");
-    gotoxy(30, 7);
-    printf("========================================\n");
-    gotoxy(30, 9);
-    printf("1. Iniciar Sesion\n");
-    gotoxy(30, 11);
-    printf("2. Registrarse\n");
-    gotoxy(30, 13);
-    printf("Seleccione una opcion (1 o 2): ");
-    opcion = getch();
 
-    if (opcion == '1') {
-        char usuario[MAX_USERNAME];
-        char clave[MAX_PASSWORD];
-
+    do {
         system("cls");
-        setColor(7, 8); // Texto blanco, fondo gris
+        dibujarCuadro(27, 4, 72, 15);
+        gotoxy(30, 5);
+        printf("========================================\n");
+        gotoxy(30, 6);
+        printf("           Bienvenido al Sistema         \n");
+        gotoxy(30, 7);
+        printf("========================================\n");
 
-        dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-        setColor(0, 7); // Texto negro, fondo blanco
-        gotoxy(20, 7);
-        printf("Ingrese el nombre de usuario: ");
-        setColor(7, 8); // Texto blanco, fondo gris
-        gotoxy(50, 7);
-        fgets(usuario, MAX_USERNAME, stdin);
-        usuario[strcspn(usuario, "\n")] = '\0';
-
-        setColor(0, 7); // Texto negro, fondo blanco
-        gotoxy(20, 9);
-        printf("Ingrese la clave: ");
-        setColor(7, 8); // Texto blanco, fondo gris
-        gotoxy(50, 9);
-        ocultarClave(clave);
-
-        if (verificarUsuario(usuario, clave)) {
-            gotoxy(20, 11);
-            setColor(2, 8); // Texto verde, fondo gris
-            printf("Inicio de sesion exitoso!\n");
-        } else {
-            gotoxy(20, 11);
-            setColor(4, 8); // Texto rojo, fondo gris
-            printf("Usuario o clave incorrectos.\n");
+        // Mostrar opciones
+        for (int i = 0; i < num_opciones; i++) {
+            gotoxy(30, 9 + i * 2);
+            if (i == opcion) {
+                printf("->  "); // Resalta la opción actual
+            } else {
+                printf("  ");
+            }
+            if (i == 0) {
+                printf("1. Iniciar Sesion\n");
+            } else {
+                printf("2. Registrarse\n");
+            }
         }
-    } else if (opcion == '2') {
+        // Obtiene la tecla presionada
+        tecla = getch();
+        //Manejo teclas
+        switch (tecla) {
+            case 72: // Flecha arriba
+                opcion = (opcion - 1 + num_opciones) % num_opciones;
+                break;
+            case 80: // Flecha abajo
+                opcion = (opcion + 1) % num_opciones;
+                break;
+        }
+    } while (tecla != 13); // Salir con Enter
+
+    // Aquí puedes llamar a la función correspondiente según la opción seleccionada
+    if (opcion == 0) {
         system("cls");
-        setColor(7, 8); // Texto blanco, fondo gris
-
-        dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-        registrarUsuario();
-
+        iniciarSesion();// Llamar a la función para iniciar sesión
     } else {
-        gotoxy(30, 15);
-        setColor(4, 8); // Texto rojo, fondo gris
-        printf("Opcion no valida.\n");
+        system("cls");
+        registrarPersona();// Llamar a la función para registrarse
     }
 }
 
 void menuPrincipal(char rol) {
-    char opcion;
+    int opcion = 0;
+    int num_opcionesClientes = 3;
+    int num_opcionesAdmin = 3; // Número total de opciones: Iniciar Sesion y Registrarse
+    char tecla;
     system("cls");
     setColor(7, 8); // Texto blanco, fondo gris
+    system("cls");
+    dibujarCuadro(27, 4, 72, 15);
 
-    gotoxy(30, 5);
-    printf("========================================\n");
-    gotoxy(30, 6);
-    printf("           Menu Principal          \n");
-    gotoxy(30, 7);
-    printf("========================================\n");
 
     if (rol == 'C') {
-        // Cliente
-        gotoxy(30, 9);
-        printf("1. VEHICULOS\n");
-        gotoxy(30, 10);
-        printf("2. PERSONAS\n");
-        gotoxy(30, 11);
-        printf("3. ALQUILER\n");
-        gotoxy(30, 13);
-        printf("Seleccione una opcion (1-3): ");
-        opcion = getch();
-    } else if (rol == 'A') {
-        // Administrador
-        gotoxy(30, 9);
-        printf("1. GESTIONAR VEHICULOS\n");
-        gotoxy(30, 10);
-        printf("2. GESTIONAR PERSONAS\n");
-        gotoxy(30, 11);
-        printf("3. GESTIONAR ALQUILERES\n");
-        gotoxy(30, 13);
-        printf("Seleccione una opcion (1-3): ");
-        opcion = getch();
-    }
+
+        do {
+            gotoxy(30, 5);
+            printf("========================================\n");
+            gotoxy(30, 6);
+            printf("           Menu Principal                \n");
+            gotoxy(30, 7);
+            printf("========================================\n");
+
+            // Cliente
+            int i = 0;
+
+          // Mostrar opciones
+          for (int i = 0; i < num_opcionesClientes; i++) {
+                gotoxy(30, 9 + i * 2);
+
+                if (i == opcion) {
+                    printf("> "); // Resalta la opción actual
+                } else {
+                    printf("  ");
+                }
+                if (i == 0) {
+                    printf("1. VEHICULOS\n");
+                } else if(i == 1) {
+                    printf("2. PERSONAS\n");
+                }else{
+                    printf("3. ALQUILER\n");
+                }
+            }// Salir con Enter
+            tecla = getch(); // Obtiene la tecla presionada
+
+            switch (tecla) {
+                case 72: // Flecha arriba
+                    opcion = (opcion - 1 + num_opcionesClientes) % num_opcionesClientes;
+                    break;
+                case 80: // Flecha abajo
+                    opcion = (opcion + 1) % num_opcionesClientes;
+                    break;
+            }
+         }while (tecla != 13); // Salir con Enter
 
     switch (opcion) {
-        case '1':
+        case 0:
+            system("cls");
+            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
             // Acción para la opción 1
             printf("Esta opcion no está desarrollada todavía");
             break;
-        case '2':
-            // Acción para la opción 2
-            printf("Esta opcion no está desarrollada todavía");
+        case 1:
+            menuPersonasCliente();
             break;
-        case '3':
+        case 2:
+            system("cls");
+            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
             // Acción para la opción 3
-        printf("Esta opcion no está desarrollada todavía");
-
+            printf("Esta opcion no está desarrollada todavía");
             break;
         default:
             // Opción no válida
         printf("Esta opcion no es válida");
             break;
-    }
-}
+        }
 
+    } else{
+        do {
+            gotoxy(30, 5);
+            printf("========================================\n");
+            gotoxy(30, 6);
+            printf("           Menu Principal                \n");
+            gotoxy(30, 7);
+            printf("========================================\n");
+
+            int i = 0;
+            gotoxy(30, 5);
+            // Mostrar opciones
+            for (int i = 0; i < num_opcionesAdmin; i++) {
+                    gotoxy(30, 9 + i * 2);
+
+                    if (i == opcion) {
+                        printf("> "); // Resalta la opción actual
+                    } else {
+                        printf("  ");
+                    }
+                    if (i == 0) {
+                        printf("1. GESTIONAR VEHICULOS\n");
+                    } else if(i == 1) {
+                        printf("2. GESTIONAR PERSONAS\n");
+                    }else{
+                        printf("3. GESTIONAR ALQUILERES\n");
+                    }
+                }
+            tecla = getch(); // Obtiene la tecla presionada
+
+            switch (tecla) {
+                case 72: // Flecha arriba
+                    opcion = (opcion - 1 + num_opcionesAdmin) % num_opcionesAdmin;
+                    break;
+                case 80: // Flecha abajo
+                    opcion = (opcion + 1) % num_opcionesAdmin;
+                    break;
+            }
+        }while (tecla != 13); // Salir con Enter
+
+            switch (opcion) {
+                case 0:
+                    system("cls");
+                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
+                    // Acción para la opción 1
+                    printf("Esta opcion no está desarrollada todavía");
+                    break;
+                case 1:
+                    // Acción para la opción 2
+                    menuPersonasAdmin();
+                    break;
+                case 2:
+                    system("cls");
+                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
+                    // Acción para la opción 3
+                printf("Esta opcion no está desarrollada todavía");
+
+                    break;
+                default:
+                    system("cls");
+                    // Opción no válida
+                printf("Esta opcion no es válida");
+                    break;
+            }
+
+    }
+
+}
