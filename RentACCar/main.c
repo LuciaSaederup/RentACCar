@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "login.h"
+#include "pantallaIngreso.h"
 int main()
 {
-    printf("Hello world!\n");
+         pantallaBienvenida();
+
     return 0;
 }
