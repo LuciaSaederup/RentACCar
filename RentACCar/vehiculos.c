@@ -217,7 +217,7 @@ void muestraVehiculos()
     fclose(archivo);
 }
 
-void modificarVehiculo(char vehiculos[])
+void modificarVehiculo()
 {
     FILE *archivo=fopen(RUTASAUTO,"a+b");
     Vehiculo v;
@@ -342,7 +342,7 @@ void mostrarAuto(Vehiculo v)
 }
 
 
-void busquedaPorPatente(char vehiculos[])
+void busquedaPorPatente()
 {
 
     FILE *archivo=fopen(RUTASAUTO,"r+b");
