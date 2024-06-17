@@ -10,15 +10,12 @@
 
 // Función para posicionar el cursor en la consola
 void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    printf("\033[%d;%dH", y, x);
 }
 
 // Función para cambiar el color de fondo y texto
 void setColor(int textColor, int bgColor) {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor << 4)));
+    printf("\033[%d;%dm", textColor, bgColor);
 }
 // centrar un cuadro en la consola
 void dibujarCuadro(int x1, int y1, int x2, int y2) {
@@ -42,14 +39,17 @@ void dibujarCuadro(int x1, int y1, int x2, int y2) {
 }
 
 void pantallaBienvenida() {
+
     int opcion = 0;
     int num_opciones = 2;
     char tecla;
-    setColor(7, 8); // Texto blanco, fondo gris
+    system("cls");
+    setColor(7, 8);
+     // Texto blanco, fondo gris
 
 
     do {
-        system("cls");
+
         dibujarCuadro(27, 4, 72, 15);
         gotoxy(30, 5);
         printf("========================================\n");
@@ -58,11 +58,11 @@ void pantallaBienvenida() {
         gotoxy(30, 7);
         printf("========================================\n");
 
-        // Mostrar opciones
+
         for (int i = 0; i < num_opciones; i++) {
             gotoxy(30, 9 + i * 2);
             if (i == opcion) {
-                printf("->  "); // Resalta la opción actual
+                printf("->  ");
             } else {
                 printf("  ");
             }
@@ -72,7 +72,7 @@ void pantallaBienvenida() {
                 printf("2. Registrarse\n");
             }
         }
-        // Obtiene la tecla presionada
+
         tecla = getch();
         //Manejo teclas
         switch (tecla) {
@@ -83,15 +83,14 @@ void pantallaBienvenida() {
                 opcion = (opcion + 1) % num_opciones;
                 break;
         }
-    } while (tecla != 13); // Salir con Enter
+    } while (tecla != 13);
 
-    // Aquí puedes llamar a la función correspondiente según la opción seleccionada
     if (opcion == 0) {
         system("cls");
-        iniciarSesion();// Llamar a la función para iniciar sesión
+        iniciarSesion();
     } else {
         system("cls");
-        registrarPersona();// Llamar a la función para registrarse
+        registrarPersona();
     }
 }
 
