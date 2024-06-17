@@ -21,4 +21,12 @@ char verificarUsuario(Persona user);
 void modificarPersona();
 void menuPersonasAdmin();
 void menuPersonasCliente();
+void verListaPersonas();
+void imprimirPersona(Persona persona, int y, int x);
+Persona buscarPersona(char dni[]);
+void borrarPersona();
+int borrarPorDNI(char dniBorrar);
+Persona leerArchPersonas(int* cantidad);
+
+
 #endif // PERSONA_H_INCLUDED
