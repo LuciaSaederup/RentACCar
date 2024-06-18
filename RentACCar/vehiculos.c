@@ -17,14 +17,13 @@ void menuVehiculos()
     {
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf("> ");
             }
             else
             {
@@ -45,10 +44,10 @@ void menuVehiculos()
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
@@ -72,7 +71,7 @@ void menuVehiculos()
                 break;
             }
             default:
-                // Opción no válida
+
                 printf("Esta opcion no es válida");
                 break;
         }
@@ -185,28 +184,27 @@ void muestraVehiculosDisponibles()
         for (int j = 0; j < num_opciones; j++) {
             gotoxy(i, f + j);
             if (j == opcion) {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             } else {
-                printf("  ");
+                printf(" ");
             }
-            // Print name and DNI
             if(arregloVehiculos[j].disponibilidad==1){
-                printf("Marca: %s, Modelo: %s, precio %.2f\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
+                printf(" Marca: %s, Modelo: %s, precio %.2f\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
 
             }
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
-        }while (tecla != 13);  // Salir con Enter
+        }while (tecla != 13);
 
         if(tecla!=27){
             system("cls");
