@@ -15,38 +15,40 @@
 
 void mostrarMenuReportesYEstadisticas(char rol)
 {
+     system("cls");
     setColorGral();
     int opcion;
-    system("cls");
-    int num_opciones = 4;
+    int num_opciones = 5;
     int tecla;
-    dibujarCuadro(25, 3, 100, 30);
     imprimirTitulo("Reportes y estadisticas");
+     dibujarCuadro(25, 3, 100, 30);
     do
     {
 
         int i = 0;
-        gotoxy(30, 5);
+        gotoxy(30, 9);
         for (int i = 0; i < num_opciones; i++)
         {
-            gotoxy(30, 9 + i * 2);
+            gotoxy(30, 10 + i * 2);
 
             if (i == opcion)
             {
-                printf("> ");
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
             if(i==0){
-               printf("Calcular ingresos en un mes\n");
+               printf(" Calcular ingresos en un mes\n");
             }else if(i ==1){
-                printf("Calcular alquiler con mayor ingreso\n");
+                printf(" Calcular alquiler con mayor ingreso\n");
             }else if(i==2){
-                printf("Ver vehiculos disponibles con menos de 5 años\n");
+                printf(" Ver vehiculos disponibles con menos de 5 años\n");
             }else if(i==3){
-                printf("Ver listado de alquileres por cliente\n");
+                printf(" Ver listado de alquileres por cliente\n");
+            }else if(i==4){
+                printf(" Volver atras");
             }
         }
         tecla = getch();
@@ -84,6 +86,8 @@ void mostrarMenuReportesYEstadisticas(char rol)
                 verAlquileresPorCliente();
                 break;
             }
+            case 4:
+                menuPrincipal(rol);
             default:
                 printf("Esta opcion no es válida");
                 break;

@@ -451,7 +451,6 @@ Vehiculo* leerArchVehiculos(int* cantidad){
         setColorError();
         gotoxy(50,5);
         printf("\nHubo un error al abrir el archivo");
-        exit(1);
     }
     else
     {
@@ -659,7 +658,6 @@ void confirmarCambiosVehiculo(Vehiculo vehiculo){
                     setColorError();
                     gotoxy(50,5);
                     printf("Error al abrir el archivo");
-                    exit(1);
                 }
 
             fwrite(&vehiculo, sizeof(Vehiculo), 1, archivoVehiculos);

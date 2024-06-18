@@ -31,7 +31,6 @@ void registrarPersona()
         setColor();
         gotoxy(50,5);
         printf("Error al abrir el archivo");
-        exit(1);
     }else{
 
         setColorGral();
@@ -42,7 +41,12 @@ void registrarPersona()
         printf("Ingrese el DNI: ");
         gotoxy(50, 5);
         fflush(stdin);
-        gets(persona.dni);
+        fgets(persona.dni, MAX_DNI, stdin);
+
+        size_t len = strlen(persona.dni);
+        if (len > 0 && persona.dni[len-1] == '\n') {
+            persona.dni[len-1] = '\0';
+        }
 
         gotoxy(30, 7);
         printf("Ingrese el nombre completo: ");
@@ -73,7 +77,6 @@ void registrarPersona()
         gotoxy(50, 15);
         fflush(stdin);
         ocultarClave(persona.pasword);
-
 
         persona.rol = 'C';
 
@@ -308,9 +311,7 @@ void modificarPersona()
     Persona persona;
     dibujarCuadro(25, 3, 100, 30);
 
-
-
-    gotoxy(20,5);
+    gotoxy(26,5);
     printf("Antes de modificar la informacion personal debera validar su DNI: \n");
     gotoxy(30,6);
     fflush(stdin);
@@ -323,12 +324,12 @@ void modificarPersona()
     do
     {
         dibujarCuadro(25, 3, 100, 30);
-        gotoxy(30, 5);
+        gotoxy(30, 8);
         printf("Que atributo desea modificar? \n");
         for (int i = 0; i < num_opciones; i++)
         {
 
-            gotoxy(30, 8 + i * 2);
+            gotoxy(30, 9 + i * 2);
             if (i == opcion)
             {
                 printf(">");
@@ -362,8 +363,8 @@ void modificarPersona()
             {
                 printf(" Usuario \n");
             }
-            else if(i==5){
-                printf(" Salir");
+            else if(i==6){
+                printf(" Salir\n");
             }
         }
         tecla = getch(); // Obtiene la tecla presionada
@@ -408,6 +409,7 @@ void modificarPersona()
         printf("Ingrese el nuevo rol\n");
         gotoxy(60, 8);
         persona.rol = getch();
+        printf("%c", persona.rol);
         break;
     case 4:
         system("cls");
@@ -424,7 +426,7 @@ void modificarPersona()
         gets(persona.usuario);
         break;
     case 6:
-        menuPrincipal();
+        menuPrincipal("A");
     default:
         gotoxy(30, 6);
         printf("Esta opcion no es válida");
@@ -617,6 +619,7 @@ Persona buscarPersona(char dni[])
 
         arregloPersonas[i].dni[strcspn(arregloPersonas[i].dni, "\n")]==0;
 
+        Sleep(1500);
         if(strcmpi(arregloPersonas[i].dni, dni)== 0)
         {
 
@@ -719,7 +722,7 @@ Persona* leerArchPersonas(int* cantidad)
         gotoxy(50,5);
         printf("\nHubo un error al abrir el archivo");
         system("cls");
-        exit(1);
+
     }
     else
     {
@@ -737,7 +740,6 @@ Persona* leerArchPersonas(int* cantidad)
             gotoxy(50, 5);
             printf("No se pudo asignar memoria.\n");
             fclose(archivoPersona);
-            exit(1);
         }
 
         for (int i = 0; i < cantidadEnArchivo; i++) {
@@ -760,14 +762,14 @@ void confirmarCambiosPersona(Persona persona){
     char tecla;
     FILE* archivoPersona;
     int borrado;
-
+    dibujarCuadro(25, 3, 100, 30);
     do{
-        dibujarCuadro(25, 3, 100, 30);
+
         for (int i = 0; i < opcGuarda; i++)
         {
-            gotoxy(30, 6);
+            gotoxy(30, 9);
             printf("Desea guardar los cambios? \n");
-            gotoxy(30, 9 + i * 2);
+            gotoxy(30, 10 + i * 2);
 
             if (i == opcion)
             {
@@ -813,7 +815,6 @@ void confirmarCambiosPersona(Persona persona){
                     gotoxy(50,5);
                     setColorError();
                     printf("Error al abrir el archivo");
-                    exit(1);
                 }
             if(borrado == 1){
                 fwrite(&persona, sizeof(Persona), 1, archivoPersona);

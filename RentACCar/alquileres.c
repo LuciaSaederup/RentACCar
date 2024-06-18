@@ -24,41 +24,41 @@ void cargaUnAlquiler()
     persona = buscarPersona(dni);
 
     gotoxy(30,7);
-    printf("\nIngrese el dia de inicio del alquiler\n");
-    gotoxy(50,7);
+    printf("Ingrese el dia de inicio del alquiler\n");
+    gotoxy(70,7);
     fflush(stdin);
     scanf("%i",&a.fechaInicio.dia);
 
     gotoxy(30, 8);
-    printf("\nIngrese el mes de inicio del alquiler\n");
-    gotoxy(50,8);
+    printf("Ingrese el mes de inicio del alquiler\n");
+    gotoxy(70,8);
     fflush(stdin);
     scanf("%i",&a.fechaInicio.mes);
 
     gotoxy(30, 9);
-    printf("\nIngrese el anio de inicio del alquiler\n");
-    gotoxy(50,9);
+    printf("Ingrese el anio de inicio del alquiler\n");
+    gotoxy(70,9);
     fflush(stdin);
     scanf("%i",&a.fechaInicio.anio);
 
     gotoxy(30, 10);
-    printf("\nIngrese el dia de fin del alquiler\n");
-    gotoxy(50,10);
+    printf("Ingrese el dia de fin del alquiler\n");
+    gotoxy(70,10);
     fflush(stdin);
     scanf("%i",&a.fechaFin.dia);
 
     gotoxy(30,11);
-    printf("\nIngrese el mes de fin del alquiler\n");
-    gotoxy(50,11);
+    printf("Ingrese el mes de fin del alquiler\n");
+    gotoxy(70,11);
     fflush(stdin);
     scanf("%i",&a.fechaFin.mes);
 
     gotoxy(30,12);
-    printf("\nIngrese el anio de fin del alquiler\n");
-    gotoxy(50,12);
+    printf("Ingrese el anio de fin del alquiler\n");
+    gotoxy(70,12);
     fflush(stdin);
     scanf("%i",&a.fechaFin.anio);
-
+    system("cls");
     cantDias=(a.fechaFin.anio - a.fechaInicio.anio) * 365 + (a.fechaFin.mes - a.fechaInicio.mes) * 30 + (a.fechaFin.dia - a.fechaInicio.dia);
 
     Vehiculo v;
@@ -68,13 +68,15 @@ void cargaUnAlquiler()
     a.patente=v.patente;
 
     a.precioTotal = cantDias * v.precioDeAlquilerDiario ;
-    system("cls");
-    dibujarCuadro(25, 3, 100, 30);
-    gotoxy(50,13);
-    printf("Alquilar desde %i/%i/%i hasta el %i/%i/%i",a.fechaInicio.dia,a.fechaInicio.mes,a.fechaInicio.anio,a.fechaFin.dia,a.fechaFin.mes,a.fechaFin.anio);
-    gotoxy(50,14);
-    printf("Tiene un precio total de: $%0.2f para este vehiculo %s %s", a.precioTotal,a.vehiculo.marca,a.vehiculo.modelo);
 
+    dibujarCuadro(25, 3, 100, 30);
+    gotoxy(30,9);
+
+    printf("Alquilar desde %i/%i/%i hasta el %i/%i/%i",a.fechaInicio.dia,a.fechaInicio.mes,a.fechaInicio.anio,a.fechaFin.dia,a.fechaFin.mes,a.fechaFin.anio);
+
+    gotoxy(30,10);
+    printf("Tiene un precio total de: $%0.2f para el vehiculo %s %s", a.precioTotal,a.vehiculo.marca,a.vehiculo.modelo);
+    Sleep(10000);
     confirmarAlquiler(a);
 
 
@@ -91,14 +93,11 @@ void mostrarAlquieres()
     int opcion = 0;
     char tecla;
 
-    int i =20;
-    int f = 9;
-
     do{
         system("cls");
         dibujarCuadro(25, 3, 100, 30);
         for (int j = 0; j < num_opciones; j++) {
-            gotoxy(i, f + j);
+            gotoxy(30, 9 + j);
             if (j == opcion) {
                 printf(">");
             } else {
@@ -223,13 +222,12 @@ Vehiculo verListaVehiculosDisponiblesySeleccionar(){
     int num_opciones = cantidad;
     int opcion = 0;
     char tecla;
-    int i =20;
-    int f = 9;
+
     dibujarCuadro(25, 3, 100, 30);
 
     do{
         for (int j = 0; j < num_opciones; j++) {
-            gotoxy(i, f + j);
+            gotoxy(30, 9 + j);
             if (j == opcion) {
                 printf("> ");
             } else {
@@ -237,7 +235,7 @@ Vehiculo verListaVehiculosDisponiblesySeleccionar(){
             }
 
             if(arregloVehiculos[j].disponibilidad==1){
-                printf("Marca: %s, Modelo: %s, precio %d\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
+                printf("Marca: %s, Modelo: %s, precio %.2f\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
 
             }
         }
@@ -271,25 +269,25 @@ void confirmarAlquiler(Alquiler alquiler){
         for (int i = 0; i < opcGuarda; i++)
         {
             gotoxy(30, 6);
-            printf("Desea guardar los cambios? \n");
+            printf("Desea confirmar el alquiler? \n");
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> ");
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
             if (i == 0)
             {
-                printf("Si \n");
+                printf(" Si \n");
 
             }
             else if(i==1)
             {
-                printf("No \n");
+                printf(" No \n");
             }
         }
         tecla = getch();
@@ -318,7 +316,6 @@ void confirmarAlquiler(Alquiler alquiler){
                     gotoxy(50,5);
                     printf("Error al abrir el archivo");
                     Sleep(1500);
-                    exit(1);
                 }
 
             fwrite(&alquiler, sizeof(Alquiler), 1, archivoAlquiler);
@@ -326,13 +323,13 @@ void confirmarAlquiler(Alquiler alquiler){
             system("cls");
             dibujarCuadro(25, 3, 100, 30);
             setColorExito();
-            gotoxy(50,5);
-            printf("\n Alquilado con exito!\Lo esperamos en nuestra oficina para retirar el vehiculo");
+            gotoxy(50,9);
+            printf("\n Alquilado con exito!\nLo esperamos en nuestra oficina para retirar el vehiculo");
             Sleep(2000);
-            menuAlquileresCliente("C");
+            menuAlquileresCliente(alquiler.persona.rol);
 
         case 1:
-            menuAlquileresCliente("C");
+            menuAlquileresCliente(alquiler.persona.rol);
     }
 
 
