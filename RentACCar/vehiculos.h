@@ -35,7 +35,7 @@ typedef struct
 // 1-disponible, 0-no disponible
 } Vehiculo;
 
-void menuVehiculos();
+void menuVehiculos(char rol);
 void cargaUnVehiculo();
 void muestraVehiculosDisponibles();
 void muestraVehiculo(Vehiculo vehiculo);

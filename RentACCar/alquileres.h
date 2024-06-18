@@ -36,6 +36,6 @@ void mostrarAlquieres();
 void mostrarAlquilerPorFecha();
 Vehiculo verListaVehiculosDisponiblesySeleccionar();
 void confirmarAlquiler(Alquiler alquiler);
-void menuAlquileresCliente();
-void menuAlquileresAdmin();
+void menuAlquileresCliente(char rol);
+void menuAlquileresAdmin(char rol);
 #endif // ALQUILERES_H_INCLUDED

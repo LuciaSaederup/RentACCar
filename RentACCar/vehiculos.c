@@ -4,7 +4,7 @@
 #include "gotoxy.h"
 
 #define MAX_LETRAS_PATENTE 3
-void menuVehiculos()
+void menuVehiculos(char rol)
 {
     system("cls");
     int opcion;
@@ -12,33 +12,24 @@ void menuVehiculos()
     int tecla;
     dibujarCuadro(25, 3, 100, 30);
     setColorGral();
+    imprimirTitulo("Vehiculos");
 
     do
     {
 
-
-
-        gotoxy(30, 5);
-        printf("====================================================\n");
-        gotoxy(30, 6);
-        printf("                       Vehiculos                   \n");
-        gotoxy(30, 7);
-        printf("====================================================\n");
-
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
             if(i==0){
                printf("Cargar un nuevo vehiculo\n");
@@ -46,7 +37,6 @@ void menuVehiculos()
                 printf("Ver Vehiculos disponibles\n");
             }else if(i==2){
                 printf("Modificar un vehiculo\n");
-
             }else if(i==3){
                 printf("Volver al menu anterior");
             }
@@ -81,6 +71,8 @@ void menuVehiculos()
                 modificarVehiculo();
                 break;
             }
+            case 3:
+                menuPrincipal(rol);
             default:
                 // Opción no válida
                 printf("Esta opcion no es válida");
@@ -164,7 +156,7 @@ void cargaUnVehiculo()
     printf("Vehiculo cargado con exito!");
     Sleep(1500);
     system("cls");
-    menuVehiculos();
+    menuVehiculos("A");
     }
     else
     {
@@ -227,7 +219,7 @@ void muestraVehiculosDisponibles()
             tecla = getch();
         }
 
-        menuVehiculos();
+        menuVehiculos("A");
         system("cls");
 
 
@@ -386,7 +378,7 @@ void modificarVehiculo()
             gets(vehiculo.kms);
             break;
         case 5:
-            menuVehiculos();
+            menuVehiculos("A");
         default:
             gotoxy(30, 6);
             printf("Esta opcion no es válida");
@@ -678,10 +670,10 @@ void confirmarCambiosVehiculo(Vehiculo vehiculo){
             gotoxy(50,5);
             printf("\n Vehiculo modificado con exito!");
             Sleep(2000);
-            menuVehiculos();
+            menuVehiculos("A");
 
         case 1:
-            menuVehiculos();
+            menuVehiculos("A");
     }
 
 }

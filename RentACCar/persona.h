@@ -27,5 +27,6 @@ void borrarPersona();
 int borrarPorDNI(char dniBorrar[]);
 Persona* leerArchPersonas(int* cantidad);
 
+void noTocar();
 
 #endif // PERSONA_H_INCLUDED
