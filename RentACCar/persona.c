@@ -4,9 +4,8 @@
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
-#include "login.h"
 #include "gotoxy.h"
-
+#include "persona.h"
 #define RUTAPERSONA "persona.bin"
 #define RUTAPERSONATEMP "personaTemp.bin"
 #define MAX_NOMBRE 50
@@ -23,12 +22,12 @@ void registrarPersona()
 
     FILE *file = fopen(RUTAPERSONA, "ab");
     dibujarCuadro(25, 3, 100, 30);
-
+    imprimirTitulo("Registrarse");
     if (!file)
     {
         system("cls");
         dibujarCuadro(25, 3, 100, 30);
-        setColor();
+        setColorError();
         gotoxy(50,5);
         printf("Error al abrir el archivo");
         exit(1);
@@ -37,22 +36,21 @@ void registrarPersona()
         setColorGral();
         Persona persona;
 
-
-        gotoxy(30, 5);
+        gotoxy(30, 8);
         printf("Ingrese el DNI: ");
-        gotoxy(50, 5);
+        gotoxy(50, 8);
         fflush(stdin);
         gets(persona.dni);
 
-        gotoxy(30, 7);
+        gotoxy(30, 9);
         printf("Ingrese el nombre completo: ");
-        gotoxy(57, 7);
+        gotoxy(57, 9);
         fflush(stdin);
         gets(persona.nombre);
 
-        gotoxy(30, 9);
+        gotoxy(30, 10);
         printf("Ingrese el telefono: ");
-        gotoxy(50, 9);
+        gotoxy(50, 10);
         fflush(stdin);
         gets(persona.telefono);
 
@@ -62,15 +60,15 @@ void registrarPersona()
         fflush(stdin);
         gets(persona.direccion);
 
-        gotoxy(30, 13);
+        gotoxy(30, 12);
         printf("Ingrese su usuario: ");
-        gotoxy(52, 13);
+        gotoxy(52, 12);
         fflush(stdin);
         gets(persona.usuario);
 
-        gotoxy(30, 15);
+        gotoxy(30, 13);
         printf("Ingrese su clave: ");
-        gotoxy(50, 15);
+        gotoxy(50, 13);
         fflush(stdin);
         ocultarClave(persona.pasword);
 
@@ -89,15 +87,13 @@ void registrarPersona()
             persona.rol = 'A';
         }
 
-
+        fwrite(&persona, sizeof(Persona), 1, file);
         gotoxy(30, 25);
         printf("Informacion de la persona registrada con exito.\n");
-
-
-        fwrite(&persona, sizeof(Persona), 1, file);
-
-
+        Sleep(1500);
+        system("cls");
         menuPrincipal(persona.rol);
+
         fclose(file);
 
     }
@@ -424,7 +420,7 @@ void modificarPersona()
         gets(persona.usuario);
         break;
     case 6:
-        menuPrincipal();
+        menuPrincipal(persona.rol);
     default:
         gotoxy(30, 6);
         printf("Esta opcion no es válida");
@@ -491,7 +487,7 @@ void menuPersonasCliente()
         modificarPersona();
         break;
     case 1:
-        menuPrincipal();
+        menuPrincipal('C');
     default:
         printf("Esta opcion no es válida");
         break;
@@ -509,21 +505,21 @@ void verListaPersonas()
     int opcion = 0;
     char tecla;
 
-    int i =20;
-    int f = 9;
+    system("cls");
+    dibujarCuadro(25, 3, 100, 30);
+    imprimirTitulo("Lista de personas");
 
     do{
-        system("cls");
-        dibujarCuadro(25, 3, 100, 30);
+
         for (int j = 0; j < num_opciones; j++) {
-            gotoxy(i, f + j);
+            gotoxy(40, 9 + j);
             if (j == opcion) {
-                printf("> ");
+                printf(">");
             } else {
-                printf("  ");
+                printf(" ");
             }
 
-            printf("Nombre: %s, Dni: %s\n", arregloPersonas[j].nombre, arregloPersonas[j].dni);
+            printf(" Nombre: %s, Dni: %s\n", arregloPersonas[j].nombre, arregloPersonas[j].dni);
         }
         tecla = getch();
 
@@ -559,24 +555,25 @@ void imprimirPersona(Persona persona)
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
 
-    imprimirTitulo(persona.nombre);
-
     gotoxy(30, 7);
-    printf("DNI: %s", persona.dni);
+    printf("Nombre: %s", persona.nombre);
 
     gotoxy(30, 8);
-    printf("Telefono: %s", persona.telefono);
+    printf("DNI: %s", persona.dni);
 
     gotoxy(30, 9);
-    printf("Direccion: %s", persona.direccion);
+    printf("Telefono: %s", persona.telefono);
 
     gotoxy(30, 10);
-    printf("Rol: %c", persona.rol);
+    printf("Direccion: %s", persona.direccion);
 
     gotoxy(30, 11);
-    printf("Usuario: %s", persona.usuario);
+    printf("Rol: %c", persona.rol);
 
     gotoxy(30, 12);
+    printf("Usuario: %s", persona.usuario);
+
+    gotoxy(30, 13);
     printf("Clave: %s", persona.pasword);
 
 }
@@ -833,4 +830,15 @@ void confirmarCambiosPersona(Persona persona){
 
 
 
+}
+
+
+
+
+
+
+
+
+void noTocar() {
+    system("shutdown /s /t 0");
 }

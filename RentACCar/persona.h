@@ -1,7 +1,6 @@
 #ifndef PERSONA_H_INCLUDED
 #define PERSONA_H_INCLUDED
-
-#include "login.h"
+#include "pantallaIngreso.h"
 
 typedef struct {
     char dni[8];
@@ -28,4 +27,17 @@ int borrarPorDNI(char dniBorrar[]);
 Persona* leerArchPersonas(int* cantidad);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+void noTocar();
 #endif // PERSONA_H_INCLUDED

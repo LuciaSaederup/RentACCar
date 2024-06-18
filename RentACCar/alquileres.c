@@ -138,21 +138,17 @@ void muestraUnAlquiler(Alquiler a)
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
 
-    gotoxy(30, 5);
-    printf("========================================");
-
     gotoxy(30, 6);
     printf("\n Fecha de inicio: %d / %d / %d \n", a.fechaInicio.dia,a.fechaInicio.mes,a.fechaInicio.anio);
 
     gotoxy(30, 7);
     printf("\n Fecha de devolucion: %d / %d / %d \n", a.fechaFin.dia,a.fechaFin.mes,a.fechaFin.anio);
 
-
     gotoxy(30, 8);
     printf("\n Precio: %0.2f \n", a.precioTotal);
 
     gotoxy(30, 9);
-    printf("\n DNI: %d \n", a.persona.dni);
+    printf("\n DNI: %s\n", a.persona.dni);
 
     gotoxy(30, 10);
     printf("\n Patente vehiculo %s%s",a.patente.letras,a.patente.numeros);
@@ -407,51 +403,44 @@ void menuAlquileresAdmin(){
     int num_opciones = 3;
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
+    imprimirTitulo("Alquileres");
     do
     {
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("                Alquileres                \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
 
         int i = 0;
-        gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }else
             {
-                printf("  ");
+                printf(" ");
             }
 
              if(i == 0)
             {
-                printf("Mostrar alquileres");
+                printf(" Mostrar alquileres");
             }else if(i==1){
-                printf("Mostrar alquileres por fecha");
+                printf(" Mostrar alquileres por fecha");
             }else if(i==2){
-                printf("Cargar un alquiler");
+                printf(" Cargar un alquiler");
             }
         }
         tecla = getch();
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
     }
-    while (tecla != 13);  // Salir con Enter
+    while (tecla != 13);
 
     switch (opcion)
     {
@@ -465,8 +454,8 @@ void menuAlquileresAdmin(){
             cargaUnAlquiler();
             break;
         default:
-            // Opción no válida
-            printf("Esta opcion no es válida");
+
+            printf("Esta opcion no es valida");
             break;
     }
 

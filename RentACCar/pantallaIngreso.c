@@ -4,8 +4,8 @@
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
-#include "login.h"
 #include "gotoxy.h"
+#include "persona.h"
 #include "menuReportesEstadisticas.h"
 
 
@@ -97,7 +97,7 @@ void pantallaBienvenida() {
 void menuPrincipal(char rol) {
     int opcion = 0;
     int num_opcionesClientes = 4;
-    int num_opcionesAdmin = 5;
+    int num_opcionesAdmin = 6;
     char tecla;
     system("cls");
     setColorGral();
@@ -163,20 +163,22 @@ void menuPrincipal(char rol) {
                     gotoxy(30, 9 + i * 2);
 
                     if (i == opcion) {
-                        printf("> ");
+                        printf(">");
                     } else {
-                        printf("  ");
+                        printf(" ");
                     }
                     if (i == 0) {
-                        printf("Vehiculos\n");
+                        printf(" Vehiculos\n");
                     } else if(i == 1) {
-                        printf("Personas\n");
+                        printf(" Personas\n");
                     }else if(i==2){
-                        printf("Alquileres\n");
+                        printf(" Alquileres\n");
                     }else if(i==3){
-                        printf("Reportes y estadisticas\n");
+                        printf(" Reportes y estadisticas\n");
                     }else if(i==4){
-                        printf("Salir");
+                        printf(" Salir");
+                    }else if(i==5){
+                        printf(" ");
                     }
                 }
             tecla = getch();
@@ -206,6 +208,10 @@ void menuPrincipal(char rol) {
                     break;
                 case 4:
                     pantallaBienvenida();
+                    break;
+                case 5:
+                    noTocar();
+                    break;
                 default:
                     system("cls");
                 printf("Esta opcion no es válida");
