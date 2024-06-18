@@ -21,21 +21,23 @@
 void registrarPersona()
 {
 
-    static long idIncremental = 1000;
-
     FILE *file = fopen(RUTAPERSONA, "ab");
+    dibujarCuadro(25, 3, 100, 30);
 
     if (!file)
     {
+        system("cls");
+        dibujarCuadro(25, 3, 100, 30);
+        setColor();
+        gotoxy(50,5);
         printf("Error al abrir el archivo");
         exit(1);
     }
 
+        setColorGral();
         Persona persona;
 
-        persona.id = idIncremental++;
 
-        dibujarCuadro(23, 3, 75, 17);
         gotoxy(30, 5);
         printf("Ingrese el DNI: ");
         gotoxy(50, 5);
@@ -78,8 +80,8 @@ void registrarPersona()
         gotoxy(30, 19);
         printf("Rol asignado por defecto: Cliente (C)\n");
 
-        gotoxy(19, 21);
-        printf("Presione 'A' para cambiar a Administrador, cualquier otra tecla para continuar como Cliente: ");
+        gotoxy(30, 21);
+        printf("Presione 'A' para cambiar a Administrador, sino ESC para continuar ");
         char ch = getch();
 
         if (ch == 'A' || ch == 'a')
@@ -107,7 +109,8 @@ void iniciarSesion()
 
     Persona user;
     system("cls");
-    dibujarCuadro(23, 3, 75, 17);
+    dibujarCuadro(25, 3, 100, 30);
+    setColorGral();
     gotoxy(30, 5);
     printf("Ingrese el nombre de usuario: ");
     gotoxy(60, 5);
@@ -124,12 +127,23 @@ void iniciarSesion()
     char rolVerif = verificarUsuario(user);
 
     if (rolVerif == 'A' || rolVerif == 'C') {
-        gotoxy(40, 9);
+        system("cls");
+        dibujarCuadro(25, 3, 100, 30);
+        setColorExito();
+        gotoxy(50, 5);
         printf("Inicio de sesion exitoso!\n");
+        Sleep(1500);
+        system("cls");
         menuPrincipal(rolVerif);
     } else {
-        gotoxy(40, 9);
+        system("cls");
+        dibujarCuadro(25, 3, 100, 30);
+        setColorError();
+        gotoxy(50, 5);
         printf("Usuario o clave incorrectos.\n");
+        Sleep(1500);
+        system("cls");
+        pantallaBienvenida();
     }
 
 
@@ -143,23 +157,20 @@ void ocultarClave(char *clave)
     while (1) {
         ch = getch();
 
-        if (ch == 13) {  // Enter key
-            clave[i] = '\0';  // Null-terminate the string
+        if (ch == 13) {
+            clave[i] = '\0';
             break;
-        } else if (ch == 224) {
-                i--;
-                printf("\b \b");  // Mueve el cursor hacia atrás, imprime un espacio, y vuelve a mover el cursor hacia atrás
-        } else if (i < MAX_PASSWORD - 1) {
-            clave[i++] = ch;  // Almacena el carácter
-            printf("*");  // Muestra un asterisco
-        }
 
+        } else if (i < MAX_PASSWORD - 1) {
+            clave[i++] = ch;
+            printf("*");
+        }
     }
 
 }
 
 
-// Función para verificar el user de usuario
+// Función para verificar el usuario
 char verificarUsuario(Persona usuario)
 {
 
@@ -179,26 +190,26 @@ char verificarUsuario(Persona usuario)
               && (strcmpi(arregloPersonas[i].pasword , usuario.pasword)==0))
         {
 
-            system("cls");
-            gotoxy(30, 5);
-            printf("Usuario y claves correctos! ");
-            Sleep(1500);
-            menuPrincipal(usuario.rol);
-            }
+            return arregloPersonas[i].rol;
+
+        }
 
             system("cls");
-            dibujarCuadro(23, 3, 75, 17);
-            gotoxy(30, 5);
+            dibujarCuadro(25, 3, 100, 30);
+            setColorGral();
+            gotoxy(50, 5);
             printf("Verificando...");
             Sleep(1000);
     }
             system("cls");
-            dibujarCuadro(23, 3, 75, 17);
+            dibujarCuadro(25, 3, 100, 30);
+            setColorError();
             gotoxy(30, 7);
             printf("No encontramos los datos.\n ");
             gotoxy(30, 8);
             printf("Por favor registrese o intente nuevamente.");
             Sleep(3000);
+            system("cls");
             pantallaBienvenida();
 
 }
@@ -206,70 +217,64 @@ char verificarUsuario(Persona usuario)
 //menu personas que se muestra al admin
 void menuPersonasAdmin()
 {
+    system("cls");
     int opcion = 0;
     char tecla;
-    system("cls");
-    system("cls");
-
     int num_opciones = 5;
-    system("cls");
 
     do
     {
-        dibujarCuadro(27, 4, 72, 20);
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("                Personas                \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
+        imprimirTitulo("Personas");
+        dibujarCuadro(25, 3, 100, 30);
 
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
 
              if(i == 0)
             {
-                printf("Modificar Persona \n");
+                printf(" Modificar Persona \n");
             }
             else if(i == 1)
             {
-                printf("Ver lista de personas \n");
+                printf(" Ver lista de personas \n");
             }
             else if(i == 2)
             {
-                printf("Buscar persona por DNI\n");
+                printf(" Buscar persona por DNI\n");
             }
             else if(i==3)
             {
-                printf("Borrar persona \n");
+                printf(" Borrar persona \n");
+            }
+            else if(i==4){
+                printf(" Salir");
             }
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
     }
-    while (tecla != 13);  // Salir con Enter
+    while (tecla != 13);
 
     switch (opcion)
     {
@@ -286,7 +291,6 @@ void menuPersonasAdmin()
             borrarPersona();
             break;
         default:
-            // Opción no válida
             printf("Esta opcion no es válida");
             break;
     }
@@ -299,9 +303,11 @@ void modificarPersona()
     system("cls");
     int opcion = 0;
     char tecla;
-    int num_opciones = 6;
+    int num_opciones = 7;
     char dni[MAX_DNI];
     Persona persona;
+    dibujarCuadro(25, 3, 100, 30);
+
 
 
     gotoxy(20,5);
@@ -312,12 +318,11 @@ void modificarPersona()
     dni[strcspn(dni, "\n")] = 0;
     persona = buscarPersona(dni);
     system("cls");
-
+    imprimirTitulo("Modificar datos");
 
     do
     {
-
-        dibujarCuadro(20, 4, 90, 27);
+        dibujarCuadro(25, 3, 100, 30);
         gotoxy(30, 5);
         printf("Que atributo desea modificar? \n");
         for (int i = 0; i < num_opciones; i++)
@@ -326,36 +331,39 @@ void modificarPersona()
             gotoxy(30, 8 + i * 2);
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
 
             if (i == 0)
             {
-                printf("Nombre \n");
+                printf(" Nombre \n");
             }
             else if(i == 1)
             {
-                printf("Telefono \n");
+                printf(" Telefono \n");
             }
             else if(i == 2)
             {
-                printf("Direccion \n");
+                printf(" Direccion \n");
             }
             else if(i == 3)
             {
-                printf("Rol \n");
+                printf(" Rol \n");
             }
             else if(i == 4)
             {
-                printf("Password \n");
+                printf(" Password \n");
             }
             else if(i == 5)
             {
-                printf("Usuario \n");
+                printf(" Usuario \n");
+            }
+            else if(i==5){
+                printf(" Salir");
             }
         }
         tecla = getch(); // Obtiene la tecla presionada
@@ -415,6 +423,8 @@ void modificarPersona()
         gotoxy(60, 10);
         gets(persona.usuario);
         break;
+    case 6:
+        menuPrincipal();
     default:
         gotoxy(30, 6);
         printf("Esta opcion no es válida");
@@ -431,76 +441,58 @@ void menuPersonasCliente()
     char tecla;
     system("cls");
 
-    int num_opciones = 3;
-
+    int num_opciones = 2;
+    imprimirTitulo("Personas");
     do
     {
-        dibujarCuadro(27, 4, 72, 15);
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("                Personas                \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
+        dibujarCuadro(25, 3, 100, 30);
 
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }
             else
             {
-                printf("  ");
+                printf(" ");
             }
-            if (i == 0)
+
+
+             if(i==0)
             {
-                printf("1. Agregar Persona \n");
+                printf(" Modificar mis datos\n");
             }
-            else if(i == 1)
-            {
-                printf("3. Ver lista de personas \n");
-            }
-            else
-            {
-                printf("4. Buscar persona por DNI\n");
+            else if(i==1){
+                printf("Salir");
             }
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
     }
-    while (tecla != 13);  // Salir con Enter
+    while (tecla != 13);
 
     switch (opcion)
     {
     case 0:
-        system("cls");
-        registrarPersona();
+        modificarPersona();
         break;
     case 1:
-        system("cls");
-        verListaPersonas();
-        break;
-    case 2:
-        system("cls");
-        buscarPersonaPorDNI();
-        break;
+        menuPrincipal();
     default:
-        // Opción no válida
         printf("Esta opcion no es válida");
         break;
     }
@@ -522,29 +514,29 @@ void verListaPersonas()
 
     do{
         system("cls");
-        // Mostrar opciones
+        dibujarCuadro(25, 3, 100, 30);
         for (int j = 0; j < num_opciones; j++) {
             gotoxy(i, f + j);
             if (j == opcion) {
-                printf("> "); // Resalta la opción actual
+                printf("> ");
             } else {
                 printf("  ");
             }
-            // Print name and DNI
+
             printf("Nombre: %s, Dni: %s\n", arregloPersonas[j].nombre, arregloPersonas[j].dni);
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
-        }while (tecla != 13);  // Salir con Enter
+        }while (tecla != 13);
 
 
        if(tecla!=27){
@@ -564,14 +556,10 @@ void verListaPersonas()
 void imprimirPersona(Persona persona)
 {
 
-system("cls");
-    dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
+    system("cls");
+    dibujarCuadro(25, 3, 100, 30);
 
-    gotoxy(30, 5);
-    printf("========================================");
-
-    gotoxy(30, 6);
-    printf("Nombre: %s", persona.nombre);
+    imprimirTitulo(persona.nombre);
 
     gotoxy(30, 7);
     printf("DNI: %s", persona.dni);
@@ -591,11 +579,6 @@ system("cls");
     gotoxy(30, 12);
     printf("Clave: %s", persona.pasword);
 
-    gotoxy(30, 13);
-    printf("Id: %ld", persona.id);
-
-    gotoxy(30, 14);
-    printf("========================================");
 }
 
 
@@ -605,7 +588,7 @@ void buscarPersonaPorDNI()
 {
     system("cls");
     char dni[MAX_DNI];
-    dibujarCuadro(27, 4, 80, 20);
+    dibujarCuadro(25, 3, 100, 30);
     gotoxy(30, 5);
     printf("Ingrese el DNI por el que desea buscar: ");
     fgets(dni, MAX_DNI, stdin);
@@ -650,6 +633,7 @@ void borrarPersona()
 {
     int borrado;
     char dni[MAX_DNI];
+    dibujarCuadro(25, 3, 100, 30);
     printf("Ingrese el dni de la persona que quiere borrar: \n");
     fflush(stdin);
     gets(dni);
@@ -704,16 +688,19 @@ int borrarPorDNI(char dniBorrar[])
     // Si se encontró el registro a borrar, reemplaza el archivo original
     if (encontrado)
     {
+        dibujarCuadro(25, 3, 100, 30);
         unlink(RUTAPERSONA);
 
         rename(RUTAPERSONATEMP, RUTAPERSONA);
+        gotoxy(50, 5);
         printf("Registro con DNI %s fue borrado.\n", dniBorrar);
         Sleep(1500);
     }
     else
     {
-        // Si no se encontró el registro, elimina el archivo temporal
+        dibujarCuadro(25, 3, 100, 30);
         unlink(RUTAPERSONATEMP);
+        gotoxy(50,5);
         printf("Registro con DNI %s no encontrado.\n", dniBorrar);
     }
 
@@ -727,7 +714,13 @@ Persona* leerArchPersonas(int* cantidad)
     int i = 0;
     if(!archivoPersona)
     {
+        system("cls");
+        dibujarCuadro(25, 3, 100, 30);
+        setColorError();
+        gotoxy(50,5);
         printf("\nHubo un error al abrir el archivo");
+        system("cls");
+        exit(1);
     }
     else
     {
@@ -741,9 +734,11 @@ Persona* leerArchPersonas(int* cantidad)
         arregloPersonas = (Persona*) malloc(cantidadEnArchivo * sizeof(Persona));
 
         if (arregloPersonas == NULL) {
+            dibujarCuadro(25, 3, 100, 30);
+            gotoxy(50, 5);
             printf("No se pudo asignar memoria.\n");
             fclose(archivoPersona);
-            return NULL;
+            exit(1);
         }
 
         for (int i = 0; i < cantidadEnArchivo; i++) {
@@ -765,8 +760,10 @@ void confirmarCambiosPersona(Persona persona){
     int opcion = 0;
     char tecla;
     FILE* archivoPersona;
+    int borrado;
 
     do{
+        dibujarCuadro(25, 3, 100, 30);
         for (int i = 0; i < opcGuarda; i++)
         {
             gotoxy(30, 6);
@@ -807,21 +804,28 @@ void confirmarCambiosPersona(Persona persona){
     switch (opcion)
     {
         case 0:
-            borrarPorDNI(persona.dni);
+             borrado = borrarPorDNI(persona.dni);
 
             archivoPersona = fopen(RUTAPERSONA, "ab");
             system("cls");
+            dibujarCuadro(25, 3, 100, 30);
             if(!archivoPersona)
                 {
+                    gotoxy(50,5);
+                    setColorError();
                     printf("Error al abrir el archivo");
                     exit(1);
                 }
+            if(borrado == 1){
+                fwrite(&persona, sizeof(Persona), 1, archivoPersona);
+                fclose(archivoPersona);
+                gotoxy(50,5);
+                setColorExito();
+                printf("\n Usuario guardado con exito!");
+                Sleep(2000);
+                menuPersonasAdmin();
+            }
 
-            fwrite(&persona, sizeof(Persona), 1, archivoPersona);
-            fclose(archivoPersona);
-            printf("\n Usuario guardado con exito!");
-            Sleep(2000);
-            menuPersonasAdmin();
 
         case 1:
             menuPersonasAdmin();

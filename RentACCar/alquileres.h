@@ -4,8 +4,8 @@
 #include <conio.h>
 #define ESC 27
 #include "vehiculos.h"
-
-#define RUTAALQUILERES "ARCHIVOALQUILRES.bin"
+#include "persona.h"
+#define RUTAALQUILERES "Alquileres.bin"
 
 
 
@@ -23,13 +23,19 @@ typedef struct
     Fecha fechaInicio;
     Fecha fechaFin;
     Patente patente;
-    int dniCliente;
+    Persona persona;
     float precioTotal;
+    Vehiculo vehiculo;
+
 } Alquiler;
 
-Alquiler cargaUnAlquiler();
+void cargaUnAlquiler();
 void regitrarAlquier();
-void muestraUnAlquiler(alquiler);
+void muestraUnAlquiler(Alquiler alquiler);
 void mostrarAlquieres();
-
+void mostrarAlquilerPorFecha();
+Vehiculo verListaVehiculosDisponiblesySeleccionar();
+void confirmarAlquiler(Alquiler alquiler);
+void menuAlquileresCliente();
+void menuAlquileresAdmin();
 #endif // ALQUILERES_H_INCLUDED

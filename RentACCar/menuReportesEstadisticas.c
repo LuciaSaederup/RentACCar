@@ -15,16 +15,16 @@
 
 void mostrarMenuReportesYEstadisticas()
 {
+    setColorGral();
     int opcion;
     system("cls");
     int num_opciones = 4;
     int tecla;
+    dibujarCuadro(25, 3, 100, 30);
 
     do
     {
         system("cls");
-        dibujarCuadro(25, 4, 85, 15);
-
 
         gotoxy(30, 5);
         printf("====================================================\n");
@@ -35,14 +35,13 @@ void mostrarMenuReportesYEstadisticas()
 
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf("> ");
             }
             else
             {
@@ -62,10 +61,10 @@ void mostrarMenuReportesYEstadisticas()
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
@@ -94,7 +93,6 @@ void mostrarMenuReportesYEstadisticas()
                 break;
             }
             default:
-                // Opción no válida
                 printf("Esta opcion no es válida");
                 break;
         }

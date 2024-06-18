@@ -9,7 +9,25 @@
 #include "menuReportesEstadisticas.h"
 
 
-// centrar un cuadro en la consola
+void setColor(int textColor, int bgColor) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    int colorAttribute = textColor + (bgColor * 16);
+    SetConsoleTextAttribute(hConsole, colorAttribute);
+}
+
+void setColorError(){
+    setColor(4,0);
+}
+
+void setColorExito(){
+    setColor(2,7);
+}
+
+void setColorGral(){
+    setColor(7,3);
+}
+
+
 void dibujarCuadro(int x1, int y1, int x2, int y2) {
     int i;
     for (i = x1; i <= x2; i++) {
@@ -32,41 +50,36 @@ void dibujarCuadro(int x1, int y1, int x2, int y2) {
 
 void pantallaBienvenida() {
      system("cls");
+     setColorGral();
     int opcion = 0;
     int num_opciones = 2;
     char tecla;
-
-    dibujarCuadro(27, 4, 72, 15);
+    dibujarCuadro(25, 3, 100, 30);
+    imprimirTitulo("Bienvenido a RentACar");
     do {
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("           Bienvenido al Sistema         \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
+
 
 
         for (int i = 0; i < num_opciones; i++) {
-            gotoxy(30, 9 + i * 2);
+            gotoxy(50, 9 + i * 2);
             if (i == opcion) {
-                printf("->  ");
+                printf(">");
             } else {
-                printf("  ");
+                printf(" ");
             }
             if (i == 0) {
-                printf("1. Iniciar Sesion\n");
+                printf(" Iniciar Sesion");
             } else {
-                printf("2. Registrarse\n");
+                printf(" Registrarse");
             }
         }
 
         tecla = getch();
-        //Manejo teclas
         switch (tecla) {
-            case 72: // Flecha arriba
+            case 72:
                 opcion = (opcion - 1 + num_opciones) % num_opciones;
                 break;
-            case 80: // Flecha abajo
+            case 80:
                 opcion = (opcion + 1) % num_opciones;
                 break;
         }
@@ -83,54 +96,48 @@ void pantallaBienvenida() {
 
 void menuPrincipal(char rol) {
     int opcion = 0;
-    int num_opcionesClientes = 3;
-    int num_opcionesAdmin = 4; // Número total de opciones: Iniciar Sesion y Registrarse
+    int num_opcionesClientes = 4;
+    int num_opcionesAdmin = 5;
     char tecla;
     system("cls");
-    dibujarCuadro(27, 4, 72, 15);
+    setColorGral();
+    dibujarCuadro(25, 3, 100, 30);
 
+    imprimirTitulo("Menu Principal");
 
     if (rol == 'C') {
 
         do {
-            gotoxy(30, 5);
-            printf("========================================\n");
-            gotoxy(30, 6);
-            printf("           Menu Principal                \n");
-            gotoxy(30, 7);
-            printf("========================================\n");
-
-            // Cliente
             int i = 0;
-
-          // Mostrar opciones
-          for (int i = 0; i < num_opcionesClientes; i++) {
-                gotoxy(30, 9 + i * 2);
+            for (int i = 0; i < num_opcionesClientes; i++) {
+                gotoxy(40, 9 + i * 2);
 
                 if (i == opcion) {
-                    printf("> "); // Resalta la opción actual
+                    printf(">");
                 } else {
-                    printf("  ");
+                    printf(" ");
                 }
                 if (i == 0) {
-                    printf("1. VEHICULOS\n");
+                    printf(" Vehiculos\n");
                 } else if(i == 1) {
-                    printf("2. PERSONAS\n");
-                }else{
-                    printf("3. ALQUILER\n");
+                    printf(" Personas\n");
+                }else if(i==3){
+                    printf(" Alquileres\n");
+                }else if(i==4){
+                    printf(" Salir");
                 }
-            }// Salir con Enter
-            tecla = getch(); // Obtiene la tecla presionada
+            }
+            tecla = getch();
 
             switch (tecla) {
-                case 72: // Flecha arriba
+                case 72:
                     opcion = (opcion - 1 + num_opcionesClientes) % num_opcionesClientes;
                     break;
-                case 80: // Flecha abajo
+                case 80:
                     opcion = (opcion + 1) % num_opcionesClientes;
                     break;
             }
-         }while (tecla != 13); // Salir con Enter
+         }while (tecla != 13);
 
     switch (opcion) {
         case 0:
@@ -140,34 +147,23 @@ void menuPrincipal(char rol) {
             menuPersonasCliente();
             break;
         case 2:
-            system("cls");
-            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
-            // Acción para la opción 3
-            printf("Esta opcion no está desarrollada todavía");
-            break;
+            menuAlquileresCliente();
+        case 3:
+            pantallaBienvenida();
         default:
-            // Opción no válida
-        printf("Esta opcion no es válida");
+            printf("Esta opcion no es válida");
             break;
         }
 
     } else{
         do {
-            gotoxy(30, 5);
-            printf("========================================\n");
-            gotoxy(30, 6);
-            printf("           Menu Principal                \n");
-            gotoxy(30, 7);
-            printf("========================================\n");
-
             int i = 0;
             gotoxy(30, 5);
-            // Mostrar opciones
             for (int i = 0; i < num_opcionesAdmin; i++) {
                     gotoxy(30, 9 + i * 2);
 
                     if (i == opcion) {
-                        printf("> "); // Resalta la opción actual
+                        printf("> ");
                     } else {
                         printf("  ");
                     }
@@ -179,45 +175,56 @@ void menuPrincipal(char rol) {
                         printf("Alquileres\n");
                     }else if(i==3){
                         printf("Reportes y estadisticas\n");
+                    }else if(i==4){
+                        printf("Salir");
                     }
                 }
-            tecla = getch(); // Obtiene la tecla presionada
+            tecla = getch();
 
             switch (tecla) {
-                case 72: // Flecha arriba
+                case 72:
                     opcion = (opcion - 1 + num_opcionesAdmin) % num_opcionesAdmin;
                     break;
-                case 80: // Flecha abajo
+                case 80:
                     opcion = (opcion + 1) % num_opcionesAdmin;
                     break;
             }
-        }while (tecla != 13); // Salir con Enter
+        }while (tecla != 13);
 
             switch (opcion) {
                 case 0:
                     menuVehiculos();
                     break;
                 case 1:
-                    // Acción para la opción 2
                     menuPersonasAdmin();
                     break;
                 case 2:
-                    system("cls");
-                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-                    // Acción para la opción 3
-                    printf("Esta opcion no está desarrollada todavía");
-
+                    menuAlquileresAdmin();
                     break;
                 case 3:
                     mostrarMenuReportesYEstadisticas();
                     break;
+                case 4:
+                    pantallaBienvenida();
                 default:
                     system("cls");
-                    // Opción no válida
                 printf("Esta opcion no es válida");
                     break;
             }
 
     }
+
+}
+
+
+void imprimirTitulo(char* titulo){
+
+    gotoxy(30, 5);
+    printf("===================================================================\n");
+    gotoxy(20, 6);
+    printf("                               %s                                  \n", titulo);
+    gotoxy(30, 7);
+    printf("===================================================================\n");
+
 
 }

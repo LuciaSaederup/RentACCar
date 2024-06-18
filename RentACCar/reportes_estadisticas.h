@@ -1,19 +1,7 @@
 #ifndef REPORTES_ESTADISTICAS_H_INCLUDED
 #define REPORTES_ESTADISTICAS_H_INCLUDED
 #include "vehiculos.h"
-typedef struct {
-    int dia;
-    int mes;
-    int anio;
-} Fecha;
-
-typedef struct {
-    Fecha fechaInicio;
-    Fecha fechaFin;
-    Patente vehiculo;
-    int dniCliente;
-    float precioTotal;
-} Alquiler;
+#include "alquileres.h"
 
 // Función para calcular ingresos en un mes y año específicos
 void calcularIngresosEnMes();

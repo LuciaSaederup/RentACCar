@@ -11,7 +11,6 @@ typedef struct {
     char rol;
     char pasword [50];
     char usuario [50];
-    long id;
 } Persona;
 
 void registrarPersona();
