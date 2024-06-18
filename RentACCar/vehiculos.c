@@ -12,19 +12,9 @@ void menuVehiculos()
     int tecla;
     dibujarCuadro(25, 3, 100, 30);
     setColorGral();
-
+    imprimirTitulo("Vehiculos");
     do
     {
-
-
-
-        gotoxy(30, 5);
-        printf("====================================================\n");
-        gotoxy(30, 6);
-        printf("                       Vehiculos                   \n");
-        gotoxy(30, 7);
-        printf("====================================================\n");
-
         int i = 0;
         gotoxy(30, 5);
         // Mostrar opciones

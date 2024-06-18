@@ -23,7 +23,7 @@ void registrarPersona()
 
     FILE *file = fopen(RUTAPERSONA, "ab");
     dibujarCuadro(25, 3, 100, 30);
-
+    imprimirTitulo("Registrarse");
     if (!file)
     {
         system("cls");
@@ -36,7 +36,6 @@ void registrarPersona()
 
         setColorGral();
         Persona persona;
-
 
         gotoxy(30, 5);
         printf("Ingrese el DNI: ");
@@ -98,6 +97,7 @@ void registrarPersona()
 
 
         menuPrincipal(persona.rol);
+
         fclose(file);
 
     }
