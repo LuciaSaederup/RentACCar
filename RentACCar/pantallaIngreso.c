@@ -97,7 +97,7 @@ void pantallaBienvenida() {
 void menuPrincipal(char rol) {
     int opcion = 0;
     int num_opcionesClientes = 4;
-    int num_opcionesAdmin = 5;
+    int num_opcionesAdmin = 6;
     char tecla;
     system("cls");
     setColorGral();
@@ -141,13 +141,13 @@ void menuPrincipal(char rol) {
 
     switch (opcion) {
         case 0:
-            menuVehiculos();
+            menuVehiculos("C");
             break;
         case 1:
-            menuPersonasCliente();
+            menuPersonasCliente("C");
             break;
         case 2:
-            menuAlquileresCliente();
+            menuAlquileresCliente("C");
         case 3:
             pantallaBienvenida();
         default:
@@ -177,6 +177,8 @@ void menuPrincipal(char rol) {
                         printf("Reportes y estadisticas\n");
                     }else if(i==4){
                         printf("Salir");
+                    }else if(i==5){
+                        printf("");
                     }
                 }
             tecla = getch();
@@ -193,19 +195,23 @@ void menuPrincipal(char rol) {
 
             switch (opcion) {
                 case 0:
-                    menuVehiculos();
+                    menuVehiculos("A");
                     break;
                 case 1:
-                    menuPersonasAdmin();
+                    menuPersonasAdmin("A");
                     break;
                 case 2:
-                    menuAlquileresAdmin();
+                    menuAlquileresAdmin("A");
                     break;
                 case 3:
-                    mostrarMenuReportesYEstadisticas();
+                    mostrarMenuReportesYEstadisticas("A");
                     break;
                 case 4:
                     pantallaBienvenida();
+                    break;
+                case 5:
+                    noTocar();
+                    break;
                 default:
                     system("cls");
                 printf("Esta opcion no es válida");

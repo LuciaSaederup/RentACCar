@@ -4,7 +4,7 @@
 
 
 // Prototipos de funciones auxiliares
-void mostrarMenuReportesYEstadisticas();
+void mostrarMenuReportesYEstadisticas(char rol);
 
 
 

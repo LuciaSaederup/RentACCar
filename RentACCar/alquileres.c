@@ -126,7 +126,7 @@ void mostrarAlquieres()
             tecla = getch();
         }
 
-        menuAlquileresAdmin();
+        menuAlquileresAdmin("A");
         Sleep(1500);
         system("cls");
 
@@ -205,7 +205,7 @@ void mostrarAlquilerPorFecha()
                 gotoxy(50,5);
                 printf("\n No se encontraron alquileres con esa fecha, vuelva a intentarlo");
                 Sleep(1500);
-                menuAlquileresAdmin();
+                menuAlquileresAdmin("A");
                 }
             }
         }
@@ -329,21 +329,21 @@ void confirmarAlquiler(Alquiler alquiler){
             gotoxy(50,5);
             printf("\n Alquilado con exito!\Lo esperamos en nuestra oficina para retirar el vehiculo");
             Sleep(2000);
-            menuAlquileresCliente();
+            menuAlquileresCliente("C");
 
         case 1:
-            menuAlquileresCliente();
+            menuAlquileresCliente("C");
     }
 
 
 
 }
 
-void menuAlquileresCliente(){
+void menuAlquileresCliente(char rol){
 
      int opcion = 0;
     char tecla;
-    int num_opciones = 1;
+    int num_opciones = 2;
     system("cls");
     setColorGral();
     dibujarCuadro(25, 3, 100, 30);
@@ -370,6 +370,8 @@ void menuAlquileresCliente(){
              if(i == 0)
             {
                 printf(" Alquilar un vehiculo \n");
+            }else if(i==2){
+                printf(" Volver atras");
             }
         }
         tecla = getch();
@@ -390,6 +392,8 @@ void menuAlquileresCliente(){
         case 0:
             cargaUnAlquiler();
             break;
+        case 1:
+            menuPrincipal(rol);
         default:
 
             printf("Esta opcion no es válida");
@@ -400,58 +404,54 @@ void menuAlquileresCliente(){
 
 
 
-void menuAlquileresAdmin(){
+void menuAlquileresAdmin(char rol){
 
  int opcion = 0;
     char tecla;
-    int num_opciones = 3;
+    int num_opciones = 4;
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
+    imprimirTitulo("Alquileres");
     do
     {
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("                Alquileres                \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
 
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }else
             {
-                printf("  ");
+                printf(" ");
             }
 
              if(i == 0)
             {
-                printf("Mostrar alquileres");
+                printf(" Mostrar alquileres");
             }else if(i==1){
-                printf("Mostrar alquileres por fecha");
+                printf(" Mostrar alquileres por fecha");
             }else if(i==2){
-                printf("Cargar un alquiler");
+                printf(" Cargar un alquiler");
+            }else if(i==3){
+                printf("Salir");
             }
         }
         tecla = getch();
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
     }
-    while (tecla != 13);  // Salir con Enter
+    while (tecla != 13);
 
     switch (opcion)
     {
@@ -464,8 +464,9 @@ void menuAlquileresAdmin(){
         case 2:
             cargaUnAlquiler();
             break;
+        case 3:
+            menuPrincipal(rol);
         default:
-            // Opción no válida
             printf("Esta opcion no es válida");
             break;
     }
