@@ -1,6 +1,9 @@
 #include "vehiculos.h"
 #include <conio.h>
 #include <windows.h>
+#include "gotoxy.h"
+
+#define MAX_LETRAS_PATENTE 3
 void menuVehiculos()
 {
     int opcion;
@@ -86,112 +89,107 @@ void menuVehiculos()
 
 Vehiculo cargaUnVehiculo()
 {
-    system("cls");
-    char opcion=0;
-    int flagTipo=0;
+     system("cls");
+    char opcion = 0;
+    int flagTipo = 0;
     int num_opciones = 3;
     int tecla;
     Vehiculo v;
 
-
     dibujarCuadro(23, 3, 75, 17);
     gotoxy(30, 5);
-    printf("\nIngrese la marca del vehiculo:\n");
-    fflush(stdin); //LIMPIAMOS EL BUFFER.
+    printf("Ingrese la marca del vehiculo:");
+    fflush(stdin);
     gotoxy(70, 5);
     gets(v.marca);
 
     gotoxy(30, 7);
-    printf("\nIngrese el modelo:");
+    printf("Ingrese el modelo:");
     gotoxy(57, 7);
-    fflush(stdin);//LIMPIAMOS EL BUFFER.
+    fflush(stdin);
     gets(v.modelo);
 
     gotoxy(30, 8);
-    printf("\nIngrese el anio: ");
+    printf("Ingrese el anio:");
+    gotoxy(47, 8);
     fflush(stdin);
-    gotoxy(40, 8);//LIMPIAMOS EL BUFFER.
-    scanf("%i",&v.anio);
+    scanf("%i", &v.anio);
 
-    gotoxy(30,9);
-    printf("\nIngrese los Kms que tiene el vehiculo: ");
-    gotoxy(90,9);
-    fflush(stdin);//LIMPIAMOS EL BUFFER.
-    scanf("%i",&v.kms);
+    gotoxy(30, 9);
+    printf("Ingrese los Kms que tiene el vehiculo:");
+    gotoxy(70, 9);
+    fflush(stdin);
+    scanf("%i", &v.kms);
 
-    gotoxy(30,10);
-    printf("\nIngrese el precio del alquiler diario: ");
-    gotoxy(90, 10);
-    fflush(stdin);//LIMPIAMOS EL BUFFER.
-    scanf("%f",&v.precioDeAlquilerDiario);
+    gotoxy(30, 10);
+    printf("Ingrese el precio del alquiler diario:");
+    gotoxy(70, 10);
+    fflush(stdin);
+    scanf("%f", &v.precioDeAlquilerDiario);
 
-
- do{
+    do {
         system("cls");
         // Mostrar opciones
 
         for (int i = 0; i < num_opciones; i++) {
-            gotoxy(30, i + i*2);
+            gotoxy(30, 5 + i*2);
             printf("Ingrese el tipo del auto: ");
             if (i == opcion) {
                 printf("> "); // Resalta la opción actual
             } else {
                 printf("  ");
             }
-           if(i==0){
+            if (i == 0) {
                 printf("Auto");
-           }else if(i==1){
+            } else if (i == 1) {
                 printf("Camioneta");
-           }else if(i==2){
+            } else if (i == 2) {
                 printf("Utilitario");
-           }
+            }
         }
         tecla = getch(); // Obtiene la tecla presionada
 
-        switch (tecla)
-        {
-        case 72: // Flecha arriba
-            opcion = (opcion - 1 + num_opciones) % num_opciones;
-            break;
-        case 80: // Flecha abajo
-            opcion = (opcion + 1) % num_opciones;
-            break;
+        switch (tecla) {
+            case 72: // Flecha arriba
+                opcion = (opcion - 1 + num_opciones) % num_opciones;
+                break;
+            case 80: // Flecha abajo
+                opcion = (opcion + 1) % num_opciones;
+                break;
         }
-    }while (tecla != 13);
+    } while (tecla != 13);
 
-        switch(opcion)
-        {
-            case '1':
-                strcpy(v.tipoVehiculo,"Auto");
-                flagTipo=1;
-                break ;
-            case '2':
-                strcpy(v.tipoVehiculo,"Camioneta");
-                flagTipo=1;
-                break ;
-            case '3':
-                strcpy(v.tipoVehiculo,"Utilitario");
-                flagTipo=1;
-                break ;
-        }
+    switch (opcion) {
+        case 0:
+            strcpy(v.tipoVehiculo, "Auto");
+            flagTipo = 1;
+            break;
+        case 1:
+            strcpy(v.tipoVehiculo, "Camioneta");
+            flagTipo = 1;
+            break;
+        case 2:
+            strcpy(v.tipoVehiculo, "Utilitario");
+            flagTipo = 1;
+            break;
+    }
 
-        gotoxy(30,11);
-        printf("\nIngrese las letras de la patente:\n");
-        gotoxy(90,11);
-        fflush(stdin);
-        fgets(v.patente.letras, 3, stdin);
-        validarLetrasPatente(v);
+    gotoxy(30, 11);
+    printf("Ingrese las letras de la patente:");
+    gotoxy(70, 11);
+    fflush(stdin);
+    fgets(v.patente.letras, MAX_LETRAS_PATENTE + 1, stdin);
+    validarLetrasPatente(v);
 
-         gotoxy(30,12);
-         printf("\nIngrese los numeros de la patente:\n");
-        fflush(stdin);
-        gotoxy(90,12);
-        gets(v.patente.numeros);
+    gotoxy(30, 12);
+    printf("Ingrese los numeros de la patente:");
+    gotoxy(70, 12);
+    fflush(stdin);
+    gets(v.patente.numeros);
 
-        gotoxy(30,13);
-        printf("\nEl vehiculo se cargara como DISPONIBLE (1).\nEn caso de querer cambiarlo, se caga");
-        v.disponibilidad=1;
-
+    gotoxy(30, 13);
+    printf("El vehiculo se cargara como DISPONIBLE (1).\nEn caso de querer cambiarlo, se carga");
+    v.disponibilidad = 1;
 
     return v;
 }

@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "login.h"
-
+#include "gotoxy.h"
 
 #define RUTAPERSONA "persona.bin"
 #define RUTAPERSONATEMP "personaTemp.bin"

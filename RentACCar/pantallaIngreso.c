@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "login.h"
+#include "gotoxy.h"
 #include "menuReportesEstadisticas.h"
 
 

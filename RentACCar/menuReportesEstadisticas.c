@@ -5,7 +5,7 @@
 #include "pantallaIngreso.h"
 #include "vehiculos.h"
 #define ANIOACTUAL 2024
-
+#include "gotoxy.h"
 //Librerias
 
 #include <string.h>
