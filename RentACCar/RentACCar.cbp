@@ -31,13 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="login.c">
+		<Unit filename="alquileres.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="login.h" />
+		<Unit filename="alquileres.h" />
+		<Unit filename="gotoxy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gotoxy.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menuReportesEstadisticas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="menuReportesEstadisticas.h" />
 		<Unit filename="pantallaIngreso.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -46,6 +54,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="persona.h" />
+		<Unit filename="reportes_estadisticas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="reportes_estadisticas.h" />
+		<Unit filename="vehiculos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vehiculos.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
