@@ -316,7 +316,6 @@ void confirmarAlquiler(Alquiler alquiler){
                     gotoxy(50,5);
                     printf("Error al abrir el archivo");
                     Sleep(1500);
-                    exit(1);
                 }
 
             fwrite(&alquiler, sizeof(Alquiler), 1, archivoAlquiler);

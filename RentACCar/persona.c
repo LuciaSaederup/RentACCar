@@ -722,7 +722,7 @@ Persona* leerArchPersonas(int* cantidad)
         gotoxy(50,5);
         printf("\nHubo un error al abrir el archivo");
         system("cls");
-        exit(1);
+
     }
     else
     {
@@ -740,7 +740,6 @@ Persona* leerArchPersonas(int* cantidad)
             gotoxy(50, 5);
             printf("No se pudo asignar memoria.\n");
             fclose(archivoPersona);
-            exit(1);
         }
 
         for (int i = 0; i < cantidadEnArchivo; i++) {
@@ -816,7 +815,6 @@ void confirmarCambiosPersona(Persona persona){
                     gotoxy(50,5);
                     setColorError();
                     printf("Error al abrir el archivo");
-                    exit(1);
                 }
             if(borrado == 1){
                 fwrite(&persona, sizeof(Persona), 1, archivoPersona);
