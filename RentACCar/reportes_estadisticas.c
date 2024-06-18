@@ -3,6 +3,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+
 #define ANIOACTUAL 2024
 #define RUTAALQUILERES "Alquileres.bin"
 #define RUTAVEHICULOS "Vehiculos.bin"

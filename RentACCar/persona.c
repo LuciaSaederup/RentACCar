@@ -22,7 +22,6 @@ void registrarPersona()
 {
 
     static long idIncremental = 1000;
-    setColor(7, 8); // Texto blanco, fondo gris
 
     FILE *file = fopen(RUTAPERSONA, "ab");
 
@@ -106,11 +105,9 @@ void registrarPersona()
 void iniciarSesion()
 {
 
-        Persona user;
+    Persona user;
     system("cls");
-    setColor(7, 8); // Texto blanco, fondo gris
     dibujarCuadro(23, 3, 75, 17);
-
     gotoxy(30, 5);
     printf("Ingrese el nombre de usuario: ");
     gotoxy(60, 5);
@@ -128,12 +125,10 @@ void iniciarSesion()
 
     if (rolVerif == 'A' || rolVerif == 'C') {
         gotoxy(40, 9);
-        setColor(2, 8); // Texto verde, fondo gris
         printf("Inicio de sesion exitoso!\n");
         menuPrincipal(rolVerif);
     } else {
         gotoxy(40, 9);
-        setColor(4, 8); // Texto rojo, fondo gris
         printf("Usuario o clave incorrectos.\n");
     }
 
@@ -214,7 +209,6 @@ void menuPersonasAdmin()
     int opcion = 0;
     char tecla;
     system("cls");
-    setColor(7, 8); // Texto blanco, fondo gris
     system("cls");
 
     int num_opciones = 5;
@@ -436,7 +430,6 @@ void menuPersonasCliente()
     int opcion = 0;
     char tecla;
     system("cls");
-    setColor(7, 8); // Texto blanco, fondo gris
 
     int num_opciones = 3;
 
@@ -529,7 +522,6 @@ void verListaPersonas()
 
     do{
         system("cls");
-        setColor(7, 8);
         // Mostrar opciones
         for (int j = 0; j < num_opciones; j++) {
             gotoxy(i, f + j);
@@ -573,8 +565,7 @@ void imprimirPersona(Persona persona)
 {
 
 system("cls");
-    setColor(7, 8);
-    // dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
+    dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
 
     gotoxy(30, 5);
     printf("========================================");
@@ -613,9 +604,7 @@ system("cls");
 void buscarPersonaPorDNI()
 {
     system("cls");
-    setColor(7, 8);
     char dni[MAX_DNI];
-
     dibujarCuadro(27, 4, 80, 20);
     gotoxy(30, 5);
     printf("Ingrese el DNI por el que desea buscar: ");

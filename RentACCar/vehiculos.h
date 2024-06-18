@@ -33,11 +33,12 @@ typedef struct
 // 1-disponible, 0-no disponible
 } Vehiculo;
 
+void menuVehiculos();
 void cargaEstructuraAtuos();
 void muestraVehiculos();
 void muestraVehiculosDisponibles();
 void modificarVehiculo();
-void mostrarAuto(v);
+void mostrarAuto(Vehiculo v);
 void busquedaPorPatente();
 
 #endif // VEHICULOS_H_INCLUDED

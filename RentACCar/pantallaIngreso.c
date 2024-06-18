@@ -8,15 +8,6 @@
 #include "menuReportesEstadisticas.h"
 
 
-// Función para posicionar el cursor en la consola
-void gotoxy(int x, int y) {
-    printf("\033[%d;%dH", y, x);
-}
-
-// Función para cambiar el color de fondo y texto
-void setColor(int textColor, int bgColor) {
-    printf("\033[%d;%dm", textColor, bgColor);
-}
 // centrar un cuadro en la consola
 void dibujarCuadro(int x1, int y1, int x2, int y2) {
     int i;
@@ -39,18 +30,13 @@ void dibujarCuadro(int x1, int y1, int x2, int y2) {
 }
 
 void pantallaBienvenida() {
-
+     system("cls");
     int opcion = 0;
     int num_opciones = 2;
     char tecla;
-    system("cls");
-    setColor(7, 8);
-     // Texto blanco, fondo gris
 
-
+    dibujarCuadro(27, 4, 72, 15);
     do {
-
-        dibujarCuadro(27, 4, 72, 15);
         gotoxy(30, 5);
         printf("========================================\n");
         gotoxy(30, 6);
@@ -100,8 +86,6 @@ void menuPrincipal(char rol) {
     int num_opcionesAdmin = 4; // Número total de opciones: Iniciar Sesion y Registrarse
     char tecla;
     system("cls");
-    setColor(7, 8); // Texto blanco, fondo gris
-    system("cls");
     dibujarCuadro(27, 4, 72, 15);
 
 
@@ -149,10 +133,7 @@ void menuPrincipal(char rol) {
 
     switch (opcion) {
         case 0:
-            system("cls");
-            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
-            // Acción para la opción 1
-            printf("Esta opcion no está desarrollada todavía");
+            menuVehiculos();
             break;
         case 1:
             menuPersonasCliente();
@@ -213,10 +194,7 @@ void menuPrincipal(char rol) {
 
             switch (opcion) {
                 case 0:
-                    system("cls");
-                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-                    // Acción para la opción 1
-                    printf("Esta opcion no está desarrollada todavía");
+                    menuVehiculos();
                     break;
                 case 1:
                     // Acción para la opción 2

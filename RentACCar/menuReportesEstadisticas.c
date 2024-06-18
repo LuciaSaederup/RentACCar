@@ -17,7 +17,6 @@ void mostrarMenuReportesYEstadisticas()
 {
     int opcion;
     system("cls");
-    setColor(7, 8);
     int num_opciones = 4;
     int tecla;
 
@@ -30,7 +29,7 @@ void mostrarMenuReportesYEstadisticas()
         gotoxy(30, 5);
         printf("====================================================\n");
         gotoxy(30, 6);
-        printf("          Menu de Reportes y estadisticas          \n");
+        printf("              Reportes y estadisticas                 \n");
         gotoxy(30, 7);
         printf("====================================================\n");
 
