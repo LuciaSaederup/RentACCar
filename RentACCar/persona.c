@@ -21,8 +21,6 @@
 void registrarPersona()
 {
 
-    static long idIncremental = 1000;
-
     FILE *file = fopen(RUTAPERSONA, "ab");
     dibujarCuadro(25, 3, 100, 30);
 
@@ -38,7 +36,6 @@ void registrarPersona()
 
         setColorGral();
         Persona persona;
-        persona.id = idIncremental++;
 
 
         gotoxy(30, 5);
@@ -466,7 +463,7 @@ void menuPersonasCliente()
             }
 
 
-            else if(i==0)
+             if(i==0)
             {
                 printf(" Modificar mis datos\n");
             }

@@ -55,9 +55,10 @@ void pantallaBienvenida() {
     int num_opciones = 2;
     char tecla;
     dibujarCuadro(25, 3, 100, 30);
+    imprimirTitulo("Bienvenido a RentACar");
     do {
 
-        imprimirTitulo("Bienvenido a RentACar");
+
 
         for (int i = 0; i < num_opciones; i++) {
             gotoxy(50, 9 + i * 2);
@@ -74,12 +75,11 @@ void pantallaBienvenida() {
         }
 
         tecla = getch();
-        //Manejo teclas
         switch (tecla) {
-            case 72: // Flecha arriba
+            case 72:
                 opcion = (opcion - 1 + num_opciones) % num_opciones;
                 break;
-            case 80: // Flecha abajo
+            case 80:
                 opcion = (opcion + 1) % num_opciones;
                 break;
         }
@@ -217,14 +217,14 @@ void menuPrincipal(char rol) {
 }
 
 
-void imprimirTitulo(char titulo){
+void imprimirTitulo(char* titulo){
 
-        gotoxy(30, 5);
-        printf("===================================================================\n");
-        gotoxy(30, 6);
-        printf("                                     %s                                  \n", titulo);
-        gotoxy(30, 7);
-        printf("===================================================================\n");
+    gotoxy(30, 5);
+    printf("===================================================================\n");
+    gotoxy(20, 6);
+    printf("                               %s                                  \n", titulo);
+    gotoxy(30, 7);
+    printf("===================================================================\n");
 
 
 }
