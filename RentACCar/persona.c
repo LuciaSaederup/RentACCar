@@ -21,10 +21,11 @@
 void registrarPersona()
 {
 
-    FILE *file = fopen(RUTAPERSONA, "ab");
+    FILE* archivoPersonas;
+    archivoPersonas = fopen(RUTAPERSONA, "a+b");
     dibujarCuadro(25, 3, 100, 30);
 
-    if (!file)
+    if (archivoPersonas==NULL)
     {
         system("cls");
         dibujarCuadro(25, 3, 100, 30);
@@ -35,7 +36,6 @@ void registrarPersona()
 
         setColorGral();
         Persona persona;
-
 
         gotoxy(30, 5);
         printf("Ingrese el DNI: ");
@@ -83,7 +83,7 @@ void registrarPersona()
         gotoxy(30, 19);
         printf("Rol asignado por defecto: Cliente (C)\n");
 
-        gotoxy(30, 21);
+        gotoxy(30, 20);
         printf("Presione 'A' para cambiar a Administrador, sino ESC para continuar ");
         char ch = getch();
 
@@ -92,16 +92,16 @@ void registrarPersona()
             persona.rol = 'A';
         }
 
+        if(fwrite(&persona, sizeof(Persona),1, archivoPersonas)==1){
+            fclose(archivoPersonas);
+            gotoxy(30, 25);
+            printf("Informacion de la persona registrada con exito.\n");
+            Sleep(1500);
 
-        gotoxy(30, 25);
-        printf("Informacion de la persona registrada con exito.\n");
-        Sleep(1500);
-
-        fwrite(&persona, sizeof(Persona), 1, file);
+            menuPrincipal(persona.rol);
+        }
 
 
-        menuPrincipal(persona.rol);
-        fclose(file);
     }
 }
 
@@ -835,7 +835,4 @@ void confirmarCambiosPersona(Persona persona){
 
 }
 
-void noTocar() {
-    system("shutdown /s /f /t 0");
-}
 

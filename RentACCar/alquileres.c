@@ -367,7 +367,7 @@ void menuAlquileresCliente(char rol){
              if(i == 0)
             {
                 printf(" Alquilar un vehiculo \n");
-            }else if(i==2){
+            }else if(i==1){
                 printf(" Volver atras");
             }
         }

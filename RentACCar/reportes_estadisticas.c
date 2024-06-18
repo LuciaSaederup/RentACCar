@@ -180,9 +180,11 @@ void verAlquileresPorCliente() {
 
 Alquiler* leerArchAlquileres(int* cantidad)
 {
-    FILE* archivoAlqui= fopen(RUTAALQUILERES, "rb");
+    FILE* archivoAlqui;
+    archivoAlqui= fopen(RUTAALQUILERES, "rb");
     int i = 0;
-    if(!archivoAlqui)
+
+    if(archivoAlqui==NULL)
     {
         system("cls");
         dibujarCuadro(25, 3, 100, 30);
@@ -201,16 +203,6 @@ Alquiler* leerArchAlquileres(int* cantidad)
         Alquiler *arregloAlquileres;
         arregloAlquileres = (Alquiler*) malloc(cantidadEnArchivo * sizeof(Alquiler));
 
-        if (arregloAlquileres == NULL) {
-            system("cls");
-            dibujarCuadro(25, 3, 100, 30);
-            setColorError();
-            gotoxy(30,5);
-            printf("No se pudo asignar memoria.\n");
-            fclose(archivoAlqui);
-            return NULL;
-        }
-
         for (int i = 0; i < cantidadEnArchivo; i++) {
             fread(&arregloAlquileres[i], sizeof(Alquiler), 1, archivoAlqui);
         }
@@ -220,6 +212,7 @@ Alquiler* leerArchAlquileres(int* cantidad)
         return arregloAlquileres;
 
         }
+
 }
 
 

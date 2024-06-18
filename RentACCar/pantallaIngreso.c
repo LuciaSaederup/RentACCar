@@ -97,14 +97,14 @@ void pantallaBienvenida() {
 void menuPrincipal(char rol) {
     int opcion = 0;
     int num_opcionesClientes = 4;
-    int num_opcionesAdmin = 6;
+    int num_opcionesAdmin = 5;
     char tecla;
     system("cls");
     setColorGral();
     dibujarCuadro(25, 3, 100, 30);
 
     imprimirTitulo("Menu Principal");
-
+    toupper(rol);
     if (rol == 'C') {
 
         do {
@@ -121,9 +121,9 @@ void menuPrincipal(char rol) {
                     printf(" Vehiculos\n");
                 } else if(i == 1) {
                     printf(" Personas\n");
-                }else if(i==3){
+                }else if(i==2){
                     printf(" Alquileres\n");
-                }else if(i==4){
+                }else if(i==3){
                     printf(" Salir");
                 }
             }
@@ -155,7 +155,7 @@ void menuPrincipal(char rol) {
             break;
         }
 
-    } else{
+    } else if(rol=='A'){
         do {
             int i = 0;
             gotoxy(30, 5);
@@ -163,22 +163,20 @@ void menuPrincipal(char rol) {
                     gotoxy(30, 9 + i * 2);
 
                     if (i == opcion) {
-                        printf("> ");
+                        printf(">");
                     } else {
-                        printf("  ");
+                        printf(" ");
                     }
                     if (i == 0) {
-                        printf("Vehiculos\n");
+                        printf(" Vehiculos\n");
                     } else if(i == 1) {
-                        printf("Personas\n");
+                        printf(" Personas\n");
                     }else if(i==2){
-                        printf("Alquileres\n");
+                        printf(" Alquileres\n");
                     }else if(i==3){
-                        printf("Reportes y estadisticas\n");
+                        printf(" Reportes y estadisticas\n");
                     }else if(i==4){
-                        printf("Salir");
-                    }else if(i==5){
-                        printf("");
+                        printf(" Salir");
                     }
                 }
             tecla = getch();
@@ -208,9 +206,6 @@ void menuPrincipal(char rol) {
                     break;
                 case 4:
                     pantallaBienvenida();
-                    break;
-                case 5:
-                    noTocar();
                     break;
                 default:
                     system("cls");
