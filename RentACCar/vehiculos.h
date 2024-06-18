@@ -6,6 +6,7 @@
 #include <conio.h>
 #define ESC 27
 #define RUTAVEHICULOS "Vehiculos.bin"
+#define MAX_TIPO_VEHIC 20
 
 //Estructura: Patente
 typedef struct
@@ -23,7 +24,7 @@ typedef struct
     int anio;
     int kms;
     float precioDeAlquilerDiario;
-    char tipoVehiculo[20];
+    char tipoVehiculo[MAX_TIPO_VEHIC];
     Patente patente;
 
 // 1-Auto,  2-Camioneta, 3-Utilitario
@@ -41,4 +42,5 @@ void modificarVehiculo();
 void mostrarAuto(Vehiculo v);
 void busquedaPorPatente();
 Vehiculo* leerArchVehiculos(int* cantidad);
+void ingresarTipoVehiculo(char *tipo);
 #endif // VEHICULOS_H_INCLUDED

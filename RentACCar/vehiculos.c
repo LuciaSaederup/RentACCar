@@ -46,6 +46,8 @@ void menuVehiculos()
             }else if(i==2){
                 printf("Modificar un vehiculo\n");
 
+            }else if(i==3){
+                printf("Volver al menu anterior");
             }
         }
         tecla = getch();
@@ -129,74 +131,35 @@ void cargaUnVehiculo()
     fflush(stdin);
     scanf("%f", &v.precioDeAlquilerDiario);
 
-    do {
-        system("cls");
-        // Mostrar opciones
+    char tipoVehiculo[MAX_TIPO_VEHIC];
+    ingresarTipoVehiculo(&tipoVehiculo);
+    printf("\n\nTIPO VEHICC %s", tipoVehiculo);
 
-        for (int i = 0; i < num_opciones; i++) {
-            gotoxy(30, 5 + i*2);
-            printf("Ingrese el tipo del auto: ");
-            if (i == opcion) {
-                printf("> "); // Resalta la opción actual
-            } else {
-                printf("  ");
-            }
-            if (i == 0) {
-                printf("Auto");
-            } else if (i == 1) {
-                printf("Camioneta");
-            } else if (i == 2) {
-                printf("Utilitario");
-            }
-        }
-        tecla = getch(); // Obtiene la tecla presionada
-
-        switch (tecla) {
-            case 72: // Flecha arriba
-                opcion = (opcion - 1 + num_opciones) % num_opciones;
-                break;
-            case 80: // Flecha abajo
-                opcion = (opcion + 1) % num_opciones;
-                break;
-        }
-    } while (tecla != 13);
-
-    switch (opcion) {
-        case 0:
-            strcpy(v.tipoVehiculo, "Auto");
-            flagTipo = 1;
-            break;
-        case 1:
-            strcpy(v.tipoVehiculo, "Camioneta");
-            flagTipo = 1;
-            break;
-        case 2:
-            strcpy(v.tipoVehiculo, "Utilitario");
-            flagTipo = 1;
-            break;
-    }
-
-    gotoxy(30, 11);
+    Sleep(1500);
+    strcpy(v.tipoVehiculo, tipoVehiculo);
+    gotoxy(30, 18);
     printf("Ingrese las letras de la patente:");
-    gotoxy(70, 11);
+    gotoxy(70, 18);
     fflush(stdin);
     fgets(v.patente.letras, MAX_LETRAS_PATENTE + 1, stdin);
     validarLetrasPatente(v);
 
-    gotoxy(30, 12);
+    gotoxy(30, 19);
     printf("Ingrese los numeros de la patente:");
-    gotoxy(70, 12);
+    gotoxy(70, 19);
     fflush(stdin);
     gets(v.patente.numeros);
 
-    gotoxy(30, 13);
+    gotoxy(30, 20);
     printf("El vehiculo se cargara como DISPONIBLE (1).\nEn caso de querer cambiarlo, se carga");
     v.disponibilidad = 1;
     if(archivo!=NULL)
     {
     fwrite(&v,sizeof(Vehiculo),1,archivo);
+    gotoxy(30,21);
     printf("Vehiculo cargado con exito!");
     Sleep(1500);
+    system("cls");
     menuVehiculos();
     }
     else
@@ -251,11 +214,13 @@ void muestraVehiculosDisponibles()
 
         if(tecla!=27){
             muestraVehiculo(arregloVehiculos[opcion]);
+            Sleep(1500);
+            gotoxy(30, 15);
+            printf("Presione ESC para volver al menu");
             tecla = getch();
         }
 
         menuVehiculos();
-        Sleep(1500);
         system("cls");
 
 
@@ -265,8 +230,7 @@ void muestraVehiculo(Vehiculo vehiculo)
 {
 
     system("cls");
-    dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
-
+    dibujarCuadro(27, 8, 70, 17);
     gotoxy(30, 5);
     printf("========================================");
 
@@ -283,14 +247,14 @@ void muestraVehiculo(Vehiculo vehiculo)
     printf("Kms: %i", vehiculo.kms);
 
     gotoxy(30, 10);
-    printf("Precio de alquiler diario: %ld", vehiculo.precioDeAlquilerDiario);
+    printf("Precio de alquiler diario: %.2f", vehiculo.precioDeAlquilerDiario);
 
     gotoxy(30, 11);
-    printf("Tipo Vehiculo: %c", vehiculo.tipoVehiculo);
+    printf("Tipo Vehiculo: %s", vehiculo.tipoVehiculo);
 
     gotoxy(30, 12);
-    char patente = strcat(vehiculo.patente.letras,vehiculo.patente.numeros);
-    printf("Patente: %s", patente);
+
+    printf("Patente: %s", strcat(vehiculo.patente.letras,vehiculo.patente.numeros));
 
     gotoxy(30, 13);
     printf("========================================");
@@ -471,10 +435,7 @@ Vehiculo* leerArchVehiculos(int* cantidad){
     {
         fseek(archivoVehiculos, 0L, SEEK_END);
         long cantidadBytes = ftell(archivoVehiculos);
-        printf("\nCANTIDAD DE BYTES EN EL ARCH %ld", cantidadBytes);
         int cantidadEnArchivo = cantidadBytes / sizeof(Vehiculo);
-        printf("\nCantidad de registros en archivo vehic %i", cantidadEnArchivo);
-        Sleep(1500);
 
         fseek(archivoVehiculos, 0L, SEEK_SET);
         Vehiculo *arregloVehiculos;
@@ -541,6 +502,58 @@ int validarNumerosPatente(Patente patente){
             printf("\nINGRESE LOS |NUMEROS| CORRECTOS DE LA PATENTE..\n");
             flagPantente=0;
         }
+
+
+}
+
+void ingresarTipoVehiculo(char* tipo){
+
+    int num_opciones = 3;
+    int tecla;
+    int opcion;
+    char* tipoVehiculo[MAX_TIPO_VEHIC];
+    do{
+        gotoxy(30,11);
+        printf("Ingrese el tipo del auto: ");
+        for (int i = 0; i < num_opciones; i++) {
+            gotoxy(31, 12 + i);
+
+            if (i == opcion) {
+                printf("> "); // Resalta la opción actual
+            } else {
+                printf("  ");
+            }
+            if (i == 0) {
+                printf("Auto");
+            } else if (i == 1) {
+                printf("Camioneta");
+            } else if (i == 2) {
+                printf("Utilitario");
+            }
+        }
+        tecla = getch(); // Obtiene la tecla presionada
+
+        switch (tecla) {
+            case 72: // Flecha arriba
+                opcion = (opcion - 1 + num_opciones) % num_opciones;
+                break;
+            case 80: // Flecha abajo
+                opcion = (opcion + 1) % num_opciones;
+                break;
+        }
+    } while (tecla != 13);
+
+     switch (opcion) {
+        case 0:
+            *tipo= "Auto";
+            break;
+        case 1:
+            strcpy(*tipo, "Camioneta");
+            break;
+        case 2:
+            strcpy(*tipo, "Utilitario");
+            break;
+    }
 
 
 }
