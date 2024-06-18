@@ -21,9 +21,17 @@ void mostrarMenuReportesYEstadisticas()
     int num_opciones = 4;
     int tecla;
     dibujarCuadro(25, 3, 100, 30);
-    imprimirTitulo("Reportes y estadisticas");
+
     do
     {
+        system("cls");
+
+        gotoxy(30, 5);
+        printf("====================================================\n");
+        gotoxy(30, 6);
+        printf("              Reportes y estadisticas                 \n");
+        gotoxy(30, 7);
+        printf("====================================================\n");
 
         int i = 0;
         gotoxy(30, 5);

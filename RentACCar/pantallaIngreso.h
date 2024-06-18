@@ -8,5 +8,5 @@ void menuPrincipal(char rol);
 void setColorError();
 void setColorExito();
 void setColorGral();
-void imprimirTitulo(char* titulo);
+void imprimirTitulo(char titulo);
 #endif // PANTALLAINGRESO_H_INCLUDED
