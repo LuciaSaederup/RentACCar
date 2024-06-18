@@ -5,8 +5,8 @@
 void cargaUnAlquiler()
 {
     system("cls");
+    setColorGral();
     char opcion = 0;
-    int flagTipo = 0;
     int num_opciones = 3;
     int tecla;
     float cantDias=0;
@@ -14,7 +14,7 @@ void cargaUnAlquiler()
     Persona persona;
     char dni[MAX_DNI];
 
-    dibujarCuadro(23, 3, 75, 17);
+    dibujarCuadro(25, 3, 100, 30);
     gotoxy(30, 5);
     printf("Ingrese su dni:");
     gotoxy(47,5);
@@ -64,10 +64,16 @@ void cargaUnAlquiler()
     Vehiculo v;
 
     v=verListaVehiculosDisponiblesySeleccionar();
+    a.vehiculo = v;
     a.patente=v.patente;
 
     a.precioTotal = cantDias * v.precioDeAlquilerDiario ;
-    printf("El precio total del alquiler es: %0.2f", a.precioTotal);
+    system("cls");
+    dibujarCuadro(25, 3, 100, 30);
+    gotoxy(50,13);
+    printf("Alquilar desde %i/%i/%i hasta el %i/%i/%i",a.fechaInicio.dia,a.fechaInicio.mes,a.fechaInicio.anio,a.fechaFin.dia,a.fechaFin.mes,a.fechaFin.anio);
+    gotoxy(50,14);
+    printf("Tiene un precio total de: $%0.2f para este vehiculo %s %s", a.precioTotal,a.vehiculo.marca,a.vehiculo.modelo);
 
     confirmarAlquiler(a);
 
@@ -90,30 +96,29 @@ void mostrarAlquieres()
 
     do{
         system("cls");
-        // Mostrar opciones
+        dibujarCuadro(25, 3, 100, 30);
         for (int j = 0; j < num_opciones; j++) {
             gotoxy(i, f + j);
             if (j == opcion) {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             } else {
-                printf("  ");
+                printf(" ");
             }
-            // Print name and DNI
-            printf("fecha inicio: %i/%i/%i\nfecha fin: %i/%i/%i \nprecio total: %ld\n", arregloAlquileres[j].fechaInicio.dia, arregloAlquileres[j].fechaInicio.mes,
+            printf(" Fecha inicio: %i/%i/%i\nFecha fin: %i/%i/%i \nPrecio total: %.2f\n", arregloAlquileres[j].fechaInicio.dia, arregloAlquileres[j].fechaInicio.mes,
                    arregloAlquileres[j].fechaInicio.anio,arregloAlquileres[j].fechaFin.dia,arregloAlquileres[j].fechaFin.mes,arregloAlquileres[j].fechaFin.anio,arregloAlquileres[j].precioTotal);
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
-        }while (tecla != 13);  // Salir con Enter
+        }while (tecla != 13);
 
 
        if(tecla!=27){
@@ -130,8 +135,8 @@ void mostrarAlquieres()
 
 void muestraUnAlquiler(Alquiler a)
 {
-      system("cls");
-    dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
+    system("cls");
+    dibujarCuadro(25, 3, 100, 30);
 
     gotoxy(30, 5);
     printf("========================================");
@@ -168,85 +173,86 @@ void mostrarAlquilerPorFecha()
     Alquiler* alquileres;
     alquileres = leerArchAlquileres(&cantidad);
     Alquiler a;
+    dibujarCuadro(25, 3, 100, 30);
 
-    int dia=0;
-    int mes=0;
-    int anio=0;
-
+    gotoxy(30, 5);
     printf("\nIngrese el dia de inicio del alquiler del auto\n");
     fflush(stdin);
-    scanf("%i",&dia);
+    gotoxy(50, 5);
+    scanf("%i",&a.fechaInicio.dia);
 
+    gotoxy(30,6);
     printf("\nIngrese el mes de inicio del alquiler del auto\n");
     fflush(stdin);
-    scanf("%i",&mes);
+    gotoxy(50,6);
+    scanf("%i",&a.fechaInicio.mes);
 
+    gotoxy(30,7);
     printf("\nIngrese el anio de inicio del alquiler del auto\n");
     fflush(stdin);
-    scanf("%i",&anio);
+    gotoxy(50,7);
+    scanf("%i",&a.fechaInicio.anio);
 
     for(int i = 0; i < cantidad;i++){
-        if(alquileres[i].fechaInicio.anio == anio){
-            if(alquileres[i].fechaInicio.mes == mes){
-                if(alquileres[i].fechaInicio.anio == anio){
+        if(alquileres[i].fechaInicio.anio == a.fechaInicio.anio){
+            if(alquileres[i].fechaInicio.mes == a.fechaInicio.mes){
+                if(alquileres[i].fechaInicio.dia == a.fechaInicio.dia){
                     muestraUnAlquiler(alquileres[i]);
+                }else{
+                system("cls");
+                dibujarCuadro(25, 3, 100, 30);
+                setColorError();
+                gotoxy(50,5);
+                printf("\n No se encontraron alquileres con esa fecha, vuelva a intentarlo");
+                Sleep(1500);
+                menuAlquileresAdmin();
                 }
             }
-        }else{
-            printf("\n No se encontraron alquileres con esa fecha, vuelva a intentarlo");
-            Sleep(1500);
-            menuAlquileresAdmin();
-
         }
-
     }
-
-
 }
 
 
 
 Vehiculo verListaVehiculosDisponiblesySeleccionar(){
 
+    system("cls");
     Vehiculo* arregloVehiculos;
     int cantidad;
     arregloVehiculos = leerArchVehiculos(&cantidad);
     int num_opciones = cantidad;
     int opcion = 0;
     char tecla;
-
     int i =20;
     int f = 9;
+    dibujarCuadro(25, 3, 100, 30);
 
     do{
-        system("cls");
-        printf("\ESTOY EN ELEGIR");
         for (int j = 0; j < num_opciones; j++) {
-                printf("estoy en el for");
             gotoxy(i, f + j);
             if (j == opcion) {
-                printf("> "); // Resalta la opción actual
+                printf("> ");
             } else {
                 printf("  ");
             }
-            // Print name and DNI
+
             if(arregloVehiculos[j].disponibilidad==1){
                 printf("Marca: %s, Modelo: %s, precio %d\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
 
             }
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
-        }while (tecla != 13);  // Salir con Enter
+        }while (tecla != 13);
 
     return arregloVehiculos[opcion];
 
@@ -254,11 +260,12 @@ Vehiculo verListaVehiculosDisponiblesySeleccionar(){
 
 
 void confirmarAlquiler(Alquiler alquiler){
-
+    system("cls");
     int opcGuarda = 2;
     int opcion = 0;
     char tecla;
     FILE* archivoAlquiler;
+    dibujarCuadro(25, 3, 100, 30);
 
     do{
         for (int i = 0; i < opcGuarda; i++)
@@ -285,14 +292,14 @@ void confirmarAlquiler(Alquiler alquiler){
                 printf("No \n");
             }
         }
-        tecla = getch(); // Obtiene la tecla presionada
+        tecla = getch();
 
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + opcGuarda) % opcGuarda;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % opcGuarda;
             break;
         }
@@ -305,12 +312,21 @@ void confirmarAlquiler(Alquiler alquiler){
             system("cls");
             if(!archivoAlquiler)
                 {
+                    system("cls");
+                    setColorError();
+                    dibujarCuadro(25, 3, 100, 30);
+                    gotoxy(50,5);
                     printf("Error al abrir el archivo");
+                    Sleep(1500);
                     exit(1);
                 }
 
             fwrite(&alquiler, sizeof(Alquiler), 1, archivoAlquiler);
             fclose(archivoAlquiler);
+            system("cls");
+            dibujarCuadro(25, 3, 100, 30);
+            setColorExito();
+            gotoxy(50,5);
             printf("\n Alquilado con exito!\Lo esperamos en nuestra oficina para retirar el vehiculo");
             Sleep(2000);
             menuAlquileresCliente();
@@ -327,52 +343,47 @@ void menuAlquileresCliente(){
 
      int opcion = 0;
     char tecla;
-
     int num_opciones = 1;
     system("cls");
+    setColorGral();
+    dibujarCuadro(25, 3, 100, 30);
 
     do
     {
-        dibujarCuadro(27, 4, 72, 20);
-        gotoxy(30, 5);
-        printf("========================================\n");
-        gotoxy(30, 6);
-        printf("                Alquileres                \n");
-        gotoxy(30, 7);
-        printf("========================================\n");
+        imprimirTitulo("Alquileres");
 
         int i = 0;
         gotoxy(30, 5);
-        // Mostrar opciones
+
         for (int i = 0; i < num_opciones; i++)
         {
             gotoxy(30, 9 + i * 2);
 
             if (i == opcion)
             {
-                printf("> "); // Resalta la opción actual
+                printf(">");
             }else
             {
-                printf("  ");
+                printf(" ");
             }
 
              if(i == 0)
             {
-                printf("Alquilar un vehiculo \n");
+                printf(" Alquilar un vehiculo \n");
             }
         }
         tecla = getch();
         switch (tecla)
         {
-        case 72: // Flecha arriba
+        case 72:
             opcion = (opcion - 1 + num_opciones) % num_opciones;
             break;
-        case 80: // Flecha abajo
+        case 80:
             opcion = (opcion + 1) % num_opciones;
             break;
         }
     }
-    while (tecla != 13);  // Salir con Enter
+    while (tecla != 13);
 
     switch (opcion)
     {
@@ -380,7 +391,7 @@ void menuAlquileresCliente(){
             cargaUnAlquiler();
             break;
         default:
-            // Opción no válida
+
             printf("Esta opcion no es válida");
             break;
     }
@@ -393,15 +404,11 @@ void menuAlquileresAdmin(){
 
  int opcion = 0;
     char tecla;
-    system("cls");
-    system("cls");
-
     int num_opciones = 3;
     system("cls");
-
+    dibujarCuadro(25, 3, 100, 30);
     do
     {
-        dibujarCuadro(27, 4, 72, 20);
         gotoxy(30, 5);
         printf("========================================\n");
         gotoxy(30, 6);
@@ -474,6 +481,10 @@ Alquiler* leerArchivoAlquileres(int* cantidad)
     int i = 0;
     if(!archivoAlquileres)
     {
+        system("cls");
+        dibujarCuadro(25, 3, 100, 30);
+        setColorError();
+        gotoxy(50,5);
         printf("\nHubo un error al abrir el archivo");
     }
     else
@@ -488,6 +499,10 @@ Alquiler* leerArchivoAlquileres(int* cantidad)
         arregloAlquileres = (Alquiler*) malloc(cantidadEnArchivo * sizeof(Alquiler));
 
         if (arregloAlquileres == NULL) {
+            system("cls");
+            dibujarCuadro(25, 3, 100, 30);
+            setColorError();
+            gotoxy(50,5);
             printf("No se pudo asignar memoria.\n");
             fclose(archivoAlquileres);
             return NULL;

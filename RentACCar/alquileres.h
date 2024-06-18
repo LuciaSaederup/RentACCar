@@ -25,6 +25,8 @@ typedef struct
     Patente patente;
     Persona persona;
     float precioTotal;
+    Vehiculo vehiculo;
+
 } Alquiler;
 
 void cargaUnAlquiler();

@@ -7,6 +7,7 @@
 #define ESC 27
 #define RUTAVEHICULOS "Vehiculos.bin"
 #define MAX_TIPO_VEHIC 20
+#define RUTAVEHICULOSTEMPORAL "VehiculosTemporal.bin"
 
 //Estructura: Patente
 typedef struct
@@ -35,12 +36,18 @@ typedef struct
 } Vehiculo;
 
 void menuVehiculos();
-void cargaEstructuraAtuos();
-void muestraVehiculos();
+void cargaUnVehiculo();
 void muestraVehiculosDisponibles();
+void muestraVehiculo(Vehiculo vehiculo);
 void modificarVehiculo();
-void mostrarAuto(Vehiculo v);
 void busquedaPorPatente();
+Vehiculo buscarPatente(char patente);
 Vehiculo* leerArchVehiculos(int* cantidad);
-void ingresarTipoVehiculo(char *tipo);
+int validarLetrasPatente(Patente patente);
+int validarNumerosPatente(Patente patente);
+void ingresarTipoVehiculo(char* tipo);
+void confirmarCambiosVehiculo(Vehiculo vehiculo);
+int borrarPorPatente(char patente);
+
+
 #endif // VEHICULOS_H_INCLUDED
