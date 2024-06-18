@@ -381,7 +381,8 @@ void busquedaPorPatente()
                 printf("\nKILOMETROS:%i\n",v.kms);
             }
         }
-    }else
+    }
+    else
     {
         printf("ERROR DE APERTURA DEL ARCHIVO");
     }
