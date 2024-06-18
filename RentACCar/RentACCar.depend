@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1716673994 source:c:\users\lucia\desktop\rentaccar\rentaccar\main.c
+	<stdio.h>
+	<stdlib.h>
+	"login.h"
+	"pantallaIngreso.h"
+
+1716679151 c:\users\lucia\desktop\rentaccar\rentaccar\login.h
+
+1716679544 source:c:\users\lucia\desktop\rentaccar\rentaccar\login.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"persona.h"
+
+1716676712 source:c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"login.h"
+
+1716676879 c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.h
+
+1716679619 c:\users\lucia\desktop\rentaccar\rentaccar\persona.h
+	"login.h"
+
+1716677329 source:c:\users\lucia\desktop\rentaccar\rentaccar\persona.c
+	"login.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"pantallaIngreso.h"
+
