@@ -65,7 +65,7 @@ void menuVehiculos()
         {
             case 0:
             {
-                cargaEstructuraAtuos();
+                cargaUnVehiculo();
                 break;
             }
             case 1:
@@ -87,9 +87,11 @@ void menuVehiculos()
 }
 
 
-Vehiculo cargaUnVehiculo()
+void cargaUnVehiculo()
 {
      system("cls");
+     FILE *archivo;
+    archivo=fopen(RUTAVEHICULOS,"ab");
     char opcion = 0;
     int flagTipo = 0;
     int num_opciones = 3;
@@ -190,72 +192,12 @@ Vehiculo cargaUnVehiculo()
     gotoxy(30, 13);
     printf("El vehiculo se cargara como DISPONIBLE (1).\nEn caso de querer cambiarlo, se carga");
     v.disponibilidad = 1;
-
-    return v;
-}
-
-void cargaEstructuraAtuos()
-{
-    FILE *archivo;
-    archivo=fopen(RUTAVEHICULOS,"ab");
-    int opc=0;
-    int opcion;
-    int tecla;
-    int opcionesSeguir = 2;
-    Vehiculo v;
-
     if(archivo!=NULL)
     {
-            v=cargaUnVehiculo();
-            fwrite(&v,sizeof(Vehiculo),1,archivo);
-
-        do{
-            for (int i = 0; i < opcionesSeguir; i++)
-            {
-                gotoxy(30, 6);
-                printf("Desea cargar otro vehículo? ");
-                gotoxy(30, 9 + i * 2);
-
-                if (i == opcion)
-                {
-                    printf("> ");
-                }
-                else
-                {
-                    printf("  ");
-                }
-                if (i == 0)
-                {
-                    printf("Si \n");
-
-                }
-                else if(i==1)
-                {
-                    printf("No \n");
-                }
-            }
-            tecla = getch(); // Obtiene la tecla presionada
-
-            switch (tecla)
-            {
-            case 72: // Flecha arriba
-                opcion = (opcion - 1 + opcionesSeguir) % opcionesSeguir;
-                break;
-            case 80: // Flecha abajo
-                opcion = (opcion + 1) % opcionesSeguir;
-                break;
-            }
-        }while (tecla != 13);  // Salir con Enter
-
-        switch (opcion)
-        {
-            case 0:
-                v=cargaUnVehiculo();
-
-            case 1:
-                menuVehiculos();
-        }
-
+    fwrite(&v,sizeof(Vehiculo),1,archivo);
+    printf("Vehiculo cargado con exito!");
+    Sleep(1500);
+    menuVehiculos();
     }
     else
     {
@@ -268,73 +210,91 @@ void cargaEstructuraAtuos()
 
 void muestraVehiculosDisponibles()
 {
-    FILE *archivo=fopen(RUTAVEHICULOS,"r+b");
+   Vehiculo* arregloVehiculos;
+    int cantidad;
+    arregloVehiculos = leerArchVehiculos(&cantidad);
+    int num_opciones = cantidad;
+    int opcion = 0;
+    char tecla;
 
-    Vehiculo v;
-    printf("\nLISTADO DE VEHICULOS DISPONIBLES\n");
-    int flag=1;
-    char opc=0;
+    int i =20;
+    int f = 9;
 
-    do
-    {
-        printf("\nQUIERE VER AUTOS DISPONIBLES? PRESIONE CUALQUIER TECLA PARA VER O [ESC] para salir\n");
-        fflush(stdin);
-        opc=getch();
-        if(opc!=27)
-        {
-            if(archivo!=NULL)
-            {
-                rewind(archivo);
-                while(fread(&v,sizeof(Vehiculo),1,archivo)>0)
-                {
-                    if(v.disponibilidad==flag)
-                    {
-                        printf("\nMARCA:%s\n",v.marca);
-                        printf("\nMODELO:%s\n",v.modelo);
-                        printf("\nTIPO DE VEHICULO:%s\n",v.tipoVehiculo);
-                        printf("\nANIO:%i\n",v.anio);
-                        printf("\nPATENTE:%s\n",v.patente.letras);
-                        printf("\nKILOMETROS:%i\n",v.kms);
-                    }
-                }
+    do{
+        system("cls");
+        for (int j = 0; j < num_opciones; j++) {
+                printf("estoy en el for");
+            gotoxy(i, f + j);
+            if (j == opcion) {
+                printf("> "); // Resalta la opción actual
+            } else {
+                printf("  ");
             }
-            else
-            {
-                printf("\nERROR EN APERTURA DE EL ARCHIVO\n");
+            // Print name and DNI
+            if(arregloVehiculos[j].disponibilidad==1){
+                printf("Marca: %s, Modelo: %s, precio %d\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
+
             }
         }
-    }
-    while(opc!=27);
-    fclose(archivo);
+        tecla = getch(); // Obtiene la tecla presionada
+
+        switch (tecla)
+        {
+        case 72: // Flecha arriba
+            opcion = (opcion - 1 + num_opciones) % num_opciones;
+            break;
+        case 80: // Flecha abajo
+            opcion = (opcion + 1) % num_opciones;
+            break;
+        }
+        }while (tecla != 13);  // Salir con Enter
+
+        if(tecla!=27){
+            muestraVehiculo(arregloVehiculos[opcion]);
+            tecla = getch();
+        }
+
+        menuVehiculos();
+        Sleep(1500);
+        system("cls");
+
+
 }
 
-void muestraVehiculos()
+void muestraVehiculo(Vehiculo vehiculo)
 {
-    FILE *archivo=fopen(RUTAVEHICULOS,"r+b");
 
-    Vehiculo v;
+    system("cls");
+    dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
 
-    printf("\nLISTADO DE VEHICULOS\n");
+    gotoxy(30, 5);
+    printf("========================================");
 
-    if(archivo!=NULL)
-    {
-        rewind(archivo);
-        while(fread(&v,sizeof(Vehiculo),1,archivo)>0)
-        {
+    gotoxy(30, 6);
+    printf("Marca: %s", vehiculo.marca);
 
-            printf("\nMARCA:%s\n",v.marca);
-            printf("\nMODELO:%s\n",v.modelo);
-            printf("\nTIPO DE VEHICULO:%s\n",v.tipoVehiculo);
-            printf("\nANIO:%i\n",v.anio);
-            printf("\nLETRAS PATENTE:%s\n",v.patente.letras);
-            printf("\nKILOMETROS:%i\n",v.kms);
-        }
-    }
-    else
-    {
-        printf("\nERROR EN APERTURA DEL ARCHIVO\n");
-    }
-    fclose(archivo);
+    gotoxy(30, 7);
+    printf("Modelo: %s", vehiculo.modelo);
+
+    gotoxy(30, 8);
+    printf("Anio: %i", vehiculo.anio);
+
+    gotoxy(30, 9);
+    printf("Kms: %i", vehiculo.kms);
+
+    gotoxy(30, 10);
+    printf("Precio de alquiler diario: %ld", vehiculo.precioDeAlquilerDiario);
+
+    gotoxy(30, 11);
+    printf("Tipo Vehiculo: %c", vehiculo.tipoVehiculo);
+
+    gotoxy(30, 12);
+    char patente = strcat(vehiculo.patente.letras,vehiculo.patente.numeros);
+    printf("Patente: %s", patente);
+
+    gotoxy(30, 13);
+    printf("========================================");
+
 }
 
 void modificarVehiculo()
@@ -441,7 +401,7 @@ void modificarVehiculo()
 
                 fseek(archivo,-1*sizeof(Vehiculo),SEEK_CUR);
                 fwrite(&v,sizeof(Vehiculo),1,archivo);
-                mostrarAuto(v);
+                muestraVehiculo(v);
             }
         }
     }
@@ -450,16 +410,6 @@ void modificarVehiculo()
         printf("\nERROR DE APERTURA DEL ARCHIVO\n");
     }
     fclose(archivo);
-}
-
-void mostrarAuto(Vehiculo v)
-{
-    printf("\nMARCA:%s\n",v.marca);
-    printf("\nMODELO:%s\n",v.modelo);
-    printf("\nTIPO DE VEHICULO:%s\n",v.tipoVehiculo);
-    printf("\nANIO:%i\n",v.anio);
-    printf("\nPATENTE:%s\n",v.patente.letras);
-    printf("\nKILOMETROS:%i\n",v.kms);
 }
 
 
@@ -509,17 +459,54 @@ void busquedaPorPatente()
     fclose(archivo);
 }
 
+Vehiculo* leerArchVehiculos(int* cantidad){
+
+    FILE* archivoVehiculos= fopen(RUTAVEHICULOS, "rb");
+
+    if(!archivoVehiculos)
+    {
+        printf("\nHubo un error al abrir el archivo");
+    }
+    else
+    {
+        fseek(archivoVehiculos, 0L, SEEK_END);
+        long cantidadBytes = ftell(archivoVehiculos);
+        printf("\nCANTIDAD DE BYTES EN EL ARCH %ld", cantidadBytes);
+        int cantidadEnArchivo = cantidadBytes / sizeof(Vehiculo);
+        printf("\nCantidad de registros en archivo vehic %i", cantidadEnArchivo);
+        Sleep(1500);
+
+        fseek(archivoVehiculos, 0L, SEEK_SET);
+        Vehiculo *arregloVehiculos;
+        arregloVehiculos = (Vehiculo*) malloc(cantidadEnArchivo * sizeof(Vehiculo));
+
+        if (arregloVehiculos == NULL) {
+            printf("No se pudo asignar memoria.\n");
+            fclose(archivoVehiculos);
+            return NULL;
+        }
+
+        for (int i = 0; i < cantidadEnArchivo; i++) {
+            fread(&arregloVehiculos[i], sizeof(Vehiculo), 1, archivoVehiculos);
+        }
+
+        *cantidad = cantidadEnArchivo;
+        fclose(archivoVehiculos);
+        return arregloVehiculos;
+
+        }
+
+}
 
 
-
-int validarLetrasPatente(Vehiculo v){
+int validarLetrasPatente(Patente patente){
     int flag=0;
-    int len = strlen(v.patente.letras);
+    int len = strlen(patente.letras);
         if (len == 3)// Verificar que la longitud no sea mayor a 3
         {
             for (int i = 0; i < len; i++)
             {
-                if (!isalpha(v.patente.letras[i])) // Verificar que cada carácter sea una letra
+                if (!isalpha(patente.letras[i])) // Verificar que cada carácter sea una letra
                 {
                     flag=1;
                     printf("\nINGRESE LAS |LETRAS| CORRECTAS DE LA PATENTE..\n");
@@ -534,15 +521,15 @@ int validarLetrasPatente(Vehiculo v){
     return flag;
 }
 
-int validarNumerosPatente(Vehiculo v){
+int validarNumerosPatente(Patente patente){
 
     int flagPantente=1;
-    int len = strlen(v.patente.numeros);
+    int len = strlen(patente.numeros);
     if (len == 3)   // Verificar que la longitud no sea mayor a 3
         {
             for (int i = 0; i < len; i++)
             {
-                if (!isdigit(v.patente.numeros[i]))
+                if (!isdigit(patente.numeros[i]))
                 {
                     flagPantente=0;
                     printf("\nINGRESE LOS |NUMEROS| CORRECTOS DE LA PATENTE..\n");

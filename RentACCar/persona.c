@@ -564,7 +564,7 @@ void verListaPersonas()
 void imprimirPersona(Persona persona)
 {
 
-system("cls");
+    system("cls");
     dibujarCuadro(27, 8, 70, 17); // Descomentar si tienes esta función definida
 
     gotoxy(30, 5);

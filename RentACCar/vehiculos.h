@@ -40,5 +40,5 @@ void muestraVehiculosDisponibles();
 void modificarVehiculo();
 void mostrarAuto(Vehiculo v);
 void busquedaPorPatente();
-
+Vehiculo* leerArchVehiculos(int* cantidad);
 #endif // VEHICULOS_H_INCLUDED

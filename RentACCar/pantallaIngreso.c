@@ -140,14 +140,10 @@ void menuPrincipal(char rol) {
             menuPersonasCliente();
             break;
         case 2:
-            system("cls");
-            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
-            // Acción para la opción 3
-            printf("Esta opcion no está desarrollada todavía");
-            break;
+            menuAlquileresCliente();
         default:
             // Opción no válida
-        printf("Esta opcion no es válida");
+            printf("Esta opcion no es válida");
             break;
         }
 
@@ -202,11 +198,7 @@ void menuPrincipal(char rol) {
                     menuPersonasAdmin();
                     break;
                 case 2:
-                    system("cls");
-                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-                    // Acción para la opción 3
-                    printf("Esta opcion no está desarrollada todavía");
-
+                    menuAlquileresAdmin();
                     break;
                 case 3:
                     mostrarMenuReportesYEstadisticas();

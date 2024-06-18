@@ -176,39 +176,4 @@ Alquiler* leerArchAlquileres(int* cantidad)
 }
 
 
-Vehiculo* leerArchVehiculos(int* cantidad){
 
-    FILE* archivoVehiculos= fopen(RUTAVEHICULOS, "rb");
-    int i = 0;
-    if(!archivoVehiculos)
-    {
-        printf("\nHubo un error al abrir el archivo");
-    }
-    else
-    {
-        fseek(archivoVehiculos, 0L, SEEK_END);
-        long cantidadBytes = ftell(archivoVehiculos);
-        int cantidadEnArchivo = cantidadBytes / sizeof(Vehiculo);
-        Sleep(1500);
-
-        fseek(archivoVehiculos, 0L, SEEK_SET);
-        Vehiculo *arregloVehiculos;
-        arregloVehiculos = (Vehiculo*) malloc(cantidadEnArchivo * sizeof(Vehiculo));
-
-        if (arregloVehiculos == NULL) {
-            printf("No se pudo asignar memoria.\n");
-            fclose(archivoVehiculos);
-            return NULL;
-        }
-
-        for (int i = 0; i < cantidadEnArchivo; i++) {
-            fread(&arregloVehiculos[i], sizeof(Vehiculo), 1, archivoVehiculos);
-        }
-
-        *cantidad = cantidadEnArchivo;
-        fclose(archivoVehiculos);
-        return arregloVehiculos;
-
-        }
-
-}
