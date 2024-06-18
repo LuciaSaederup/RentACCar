@@ -24,7 +24,7 @@ void calcularIngresosEnMes() {
 
     gotoxy(30, 5);
     printf("Ingrese mes y anio (MM AAAA): ");
-    gotoxy(50, 5);
+    gotoxy(70, 5);
     scanf("%d %d", &mes, &anio);
 
     for (int i = 0; i < cantidadAlquileres; i++) {
@@ -35,6 +35,8 @@ void calcularIngresosEnMes() {
 
         gotoxy(30, 6);
         printf("Ingresos en %02d/%d: %.2f\n", mes, anio, ingresosTotales);
+        Sleep(1500);
+        mostrarMenuReportesYEstadisticas("A");
 }
 
 void calcularAlquilerMayorIngreso() {
