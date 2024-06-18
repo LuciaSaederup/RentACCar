@@ -31,7 +31,6 @@ void registrarPersona()
         setColor();
         gotoxy(50,5);
         printf("Error al abrir el archivo");
-        exit(1);
     }else{
 
         setColorGral();
@@ -42,7 +41,12 @@ void registrarPersona()
         printf("Ingrese el DNI: ");
         gotoxy(50, 5);
         fflush(stdin);
-        gets(persona.dni);
+        fgets(persona.dni, MAX_DNI, stdin);
+
+        size_t len = strlen(persona.dni);
+        if (len > 0 && persona.dni[len-1] == '\n') {
+            persona.dni[len-1] = '\0';
+        }
 
         gotoxy(30, 7);
         printf("Ingrese el nombre completo: ");
@@ -73,7 +77,6 @@ void registrarPersona()
         gotoxy(50, 15);
         fflush(stdin);
         ocultarClave(persona.pasword);
-
 
         persona.rol = 'C';
 
@@ -617,6 +620,7 @@ Persona buscarPersona(char dni[])
 
         arregloPersonas[i].dni[strcspn(arregloPersonas[i].dni, "\n")]==0;
 
+        Sleep(1500);
         if(strcmpi(arregloPersonas[i].dni, dni)== 0)
         {
 
