@@ -5,21 +5,10 @@
 #include <conio.h>
 #include <windows.h>
 #include "login.h"
+#include "gotoxy.h"
+#include "menuReportesEstadisticas.h"
 
 
-
-// Función para posicionar el cursor en la consola
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
-// Función para cambiar el color de fondo y texto
-void setColor(int textColor, int bgColor) {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (textColor + (bgColor << 4)));
-}
 // centrar un cuadro en la consola
 void dibujarCuadro(int x1, int y1, int x2, int y2) {
     int i;
@@ -42,15 +31,13 @@ void dibujarCuadro(int x1, int y1, int x2, int y2) {
 }
 
 void pantallaBienvenida() {
+     system("cls");
     int opcion = 0;
     int num_opciones = 2;
     char tecla;
-    setColor(7, 8); // Texto blanco, fondo gris
 
-
+    dibujarCuadro(27, 4, 72, 15);
     do {
-        system("cls");
-        dibujarCuadro(27, 4, 72, 15);
         gotoxy(30, 5);
         printf("========================================\n");
         gotoxy(30, 6);
@@ -58,11 +45,11 @@ void pantallaBienvenida() {
         gotoxy(30, 7);
         printf("========================================\n");
 
-        // Mostrar opciones
+
         for (int i = 0; i < num_opciones; i++) {
             gotoxy(30, 9 + i * 2);
             if (i == opcion) {
-                printf("->  "); // Resalta la opción actual
+                printf("->  ");
             } else {
                 printf("  ");
             }
@@ -72,7 +59,7 @@ void pantallaBienvenida() {
                 printf("2. Registrarse\n");
             }
         }
-        // Obtiene la tecla presionada
+
         tecla = getch();
         //Manejo teclas
         switch (tecla) {
@@ -83,25 +70,22 @@ void pantallaBienvenida() {
                 opcion = (opcion + 1) % num_opciones;
                 break;
         }
-    } while (tecla != 13); // Salir con Enter
+    } while (tecla != 13);
 
-    // Aquí puedes llamar a la función correspondiente según la opción seleccionada
     if (opcion == 0) {
         system("cls");
-        iniciarSesion();// Llamar a la función para iniciar sesión
+        iniciarSesion();
     } else {
         system("cls");
-        registrarPersona();// Llamar a la función para registrarse
+        registrarPersona();
     }
 }
 
 void menuPrincipal(char rol) {
     int opcion = 0;
     int num_opcionesClientes = 3;
-    int num_opcionesAdmin = 3; // Número total de opciones: Iniciar Sesion y Registrarse
+    int num_opcionesAdmin = 4; // Número total de opciones: Iniciar Sesion y Registrarse
     char tecla;
-    system("cls");
-    setColor(7, 8); // Texto blanco, fondo gris
     system("cls");
     dibujarCuadro(27, 4, 72, 15);
 
@@ -150,10 +134,7 @@ void menuPrincipal(char rol) {
 
     switch (opcion) {
         case 0:
-            system("cls");
-            dibujarCuadro(27, 4, 72, 15); // Cuadro centrado
-            // Acción para la opción 1
-            printf("Esta opcion no está desarrollada todavía");
+            menuVehiculos();
             break;
         case 1:
             menuPersonasCliente();
@@ -191,11 +172,13 @@ void menuPrincipal(char rol) {
                         printf("  ");
                     }
                     if (i == 0) {
-                        printf("1. GESTIONAR VEHICULOS\n");
+                        printf("Vehiculos\n");
                     } else if(i == 1) {
-                        printf("2. GESTIONAR PERSONAS\n");
-                    }else{
-                        printf("3. GESTIONAR ALQUILERES\n");
+                        printf("Personas\n");
+                    }else if(i==2){
+                        printf("Alquileres\n");
+                    }else if(i==3){
+                        printf("Reportes y estadisticas\n");
                     }
                 }
             tecla = getch(); // Obtiene la tecla presionada
@@ -212,10 +195,7 @@ void menuPrincipal(char rol) {
 
             switch (opcion) {
                 case 0:
-                    system("cls");
-                    dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
-                    // Acción para la opción 1
-                    printf("Esta opcion no está desarrollada todavía");
+                    menuVehiculos();
                     break;
                 case 1:
                     // Acción para la opción 2
@@ -225,8 +205,11 @@ void menuPrincipal(char rol) {
                     system("cls");
                     dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
                     // Acción para la opción 3
-                printf("Esta opcion no está desarrollada todavía");
+                    printf("Esta opcion no está desarrollada todavía");
 
+                    break;
+                case 3:
+                    mostrarMenuReportesYEstadisticas();
                     break;
                 default:
                     system("cls");

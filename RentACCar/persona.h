@@ -22,11 +22,11 @@ void modificarPersona();
 void menuPersonasAdmin();
 void menuPersonasCliente();
 void verListaPersonas();
-void imprimirPersona(Persona persona, int y, int x);
+void imprimirPersona(Persona persona);
 Persona buscarPersona(char dni[]);
 void borrarPersona();
-int borrarPorDNI(char dniBorrar);
-Persona leerArchPersonas(int* cantidad);
+int borrarPorDNI(char dniBorrar[]);
+Persona* leerArchPersonas(int* cantidad);
 
 
 #endif // PERSONA_H_INCLUDED
