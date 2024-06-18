@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "login.h"
-
+#include "menuReportesEstadisticas.h"
 
 
 // Función para posicionar el cursor en la consola
@@ -97,7 +97,7 @@ void pantallaBienvenida() {
 void menuPrincipal(char rol) {
     int opcion = 0;
     int num_opcionesClientes = 3;
-    int num_opcionesAdmin = 3; // Número total de opciones: Iniciar Sesion y Registrarse
+    int num_opcionesAdmin = 4; // Número total de opciones: Iniciar Sesion y Registrarse
     char tecla;
     system("cls");
     setColor(7, 8); // Texto blanco, fondo gris
@@ -190,11 +190,13 @@ void menuPrincipal(char rol) {
                         printf("  ");
                     }
                     if (i == 0) {
-                        printf("1. GESTIONAR VEHICULOS\n");
+                        printf("Vehiculos\n");
                     } else if(i == 1) {
-                        printf("2. GESTIONAR PERSONAS\n");
-                    }else{
-                        printf("3. GESTIONAR ALQUILERES\n");
+                        printf("Personas\n");
+                    }else if(i==2){
+                        printf("Alquileres\n");
+                    }else if(i==3){
+                        printf("Reportes y estadisticas\n");
                     }
                 }
             tecla = getch(); // Obtiene la tecla presionada
@@ -224,8 +226,11 @@ void menuPrincipal(char rol) {
                     system("cls");
                     dibujarCuadro(10, 5, 70, 15); // Cuadro centrado
                     // Acción para la opción 3
-                printf("Esta opcion no está desarrollada todavía");
+                    printf("Esta opcion no está desarrollada todavía");
 
+                    break;
+                case 3:
+                    mostrarMenuReportesYEstadisticas();
                     break;
                 default:
                     system("cls");

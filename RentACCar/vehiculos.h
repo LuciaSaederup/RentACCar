@@ -5,7 +5,7 @@
 #include <string.h>
 #include <conio.h>
 #define ESC 27
-#define RUTASAUTO "ARCHIVOAUTOS.bin"
+#define RUTAVEHICULOS "Vehiculos.bin"
 
 //Estructura: Patente
 typedef struct

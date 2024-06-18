@@ -125,7 +125,7 @@ Vehiculo cargaUnVehiculo()
 
 void cargaEstructuraAtuos()
 {
-    FILE *archivo=fopen(RUTASAUTO,"a+b");
+    FILE *archivo=fopen(RUTAVEHICULOS,"a+b");
     int opc=0;
     Vehiculo v;
     if(archivo!=NULL)
@@ -148,7 +148,7 @@ void cargaEstructuraAtuos()
 
 void muestraVehiculosDisponibles()
 {
-    FILE *archivo=fopen(RUTASAUTO,"r+b");
+    FILE *archivo=fopen(RUTAVEHICULOS,"r+b");
 
     Vehiculo v;
     printf("\nLISTADO DE VEHICULOS DISPONIBLES\n");
@@ -190,7 +190,7 @@ void muestraVehiculosDisponibles()
 
 void muestraVehiculos()
 {
-    FILE *archivo=fopen(RUTASAUTO,"r+b");
+    FILE *archivo=fopen(RUTAVEHICULOS,"r+b");
 
     Vehiculo v;
 
@@ -219,7 +219,8 @@ void muestraVehiculos()
 
 void modificarVehiculo()
 {
-    FILE *archivo=fopen(RUTASAUTO,"a+b");
+    FILE *archivo;
+    archivo =fopen(RUTAVEHICULOS,"a+b");
     Vehiculo v;
     char modifa[20];
     char numModifica[20];
@@ -345,7 +346,7 @@ void mostrarAuto(Vehiculo v)
 void busquedaPorPatente()
 {
 
-    FILE *archivo=fopen(RUTASAUTO,"r+b");
+    FILE *archivo=fopen(RUTAVEHICULOS,"r+b");
     Vehiculo v;
     char letrasPatente[20];
     char numerosPatente[20];
