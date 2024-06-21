@@ -1,11 +1,11 @@
-#ifndef MENUREPORTESESTADISTICAS_H_INCLUDED
-#define MENUREPORTESESTADISTICAS_H_INCLUDED
-#include "vehiculos.h"
-#include "pantallaIngreso.h"
+#ifndef MENUREPOSTEESTADISTICAS_H_INCLUDED
+#define MENUREPOSTEESTADISTICAS_H_INCLUDED
 
-// Prototipos de funciones auxiliares
-void mostrarMenuReportesYEstadisticas(char rol);
+#include "includess.h"
+
+#include "persona.h"
+
+void mostrarMenuReportesYEstadisticas (Persona* persona);
 
 
-
-#endif // MENUREPORTESESTADISTICAS_H_INCLUDED
+#endif // MENUREPOSTEESTADISTICAS_H_INCLUDED

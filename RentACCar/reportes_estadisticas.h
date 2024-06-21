@@ -1,23 +1,21 @@
-#ifndef REPORTES_ESTADISTICAS_H_INCLUDED
-#define REPORTES_ESTADISTICAS_H_INCLUDED
-#include "vehiculos.h"
+#ifndef REPORTESESTADISTICAS_H_INCLUDED
+#define REPORTESESTADISTICAS_H_INCLUDED
+
+
+#include "includess.h"
 #include "alquileres.h"
+#include "persona.h"
+#include "vehiculos.h"
 
-// Función para calcular ingresos en un mes y año específicos
-void calcularIngresosEnMes();
 
-// Función para calcular el alquiler que generó mayor ingreso
+void calcularIngresosEnMes(Persona* persona);
 void calcularAlquilerMayorIngreso();
-
-// Función para ver los vehículos disponibles con menos de 5 años, ordenados por antigüedad
 void verVehiculosDisponiblesRecientes();
-
-// Función para ver listado de alquileres por cliente
+void ordenarVehiculosPorAnio(Vehiculo* vehiculos, int cantidadVehiculos);
+void imprimirVehiculosRecientes(Vehiculo* vehiculos, int cantidadVehiculos);
 void verAlquileresPorCliente();
 
-Alquiler* leerArchAlquileres(int* cantidad);
-
-Vehiculo* leerArchVehiculos(int* cantidad);
 
 
-#endif // REPORTES_ESTADISTICAS_H_INCLUDED
+
+#endif // REPORTESESTADISTICAS_H_INCLUDED

@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1716673994 source:c:\users\lucia\desktop\rentaccar\rentaccar\main.c
+1718913562 source:c:\users\lucia\desktop\rentaccar\rentaccar\main.c
 	<stdio.h>
 	<stdlib.h>
-	"login.h"
 	"pantallaIngreso.h"
+	"gotoxy.h"
 
-1716679151 c:\users\lucia\desktop\rentaccar\rentaccar\login.h
+1718735228 c:\users\lucia\desktop\rentaccar\rentaccar\login.h
+	"persona.h"
 
 1716679544 source:c:\users\lucia\desktop\rentaccar\rentaccar\login.c
 	<stdio.h>
@@ -15,25 +16,77 @@
 	<windows.h>
 	"persona.h"
 
-1716676712 source:c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<conio.h>
-	<windows.h>
-	"login.h"
-
-1716676879 c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.h
-
-1716679619 c:\users\lucia\desktop\rentaccar\rentaccar\persona.h
-	"login.h"
-
-1716677329 source:c:\users\lucia\desktop\rentaccar\rentaccar\persona.c
-	"login.h"
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<conio.h>
-	<windows.h>
+1718982817 source:c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.c
 	"pantallaIngreso.h"
+	"vehiculos.h"
+	"gotoxy.h"
+	"alquileres.h"
+	"menuReportesEstadisticas.h"
+	"pantallaIngreso.h"
+
+1718982576 c:\users\lucia\desktop\rentaccar\rentaccar\pantallaingreso.h
+	"persona.h"
+
+1718982587 c:\users\lucia\desktop\rentaccar\rentaccar\persona.h
+	"includess.h"
+
+1718982968 source:c:\users\lucia\desktop\rentaccar\rentaccar\persona.c
+	"persona.h"
+	"pantallaIngreso.h"
+	"gotoxy.h"
+
+1718733559 c:\users\lucia\desktop\rentaccar\rentaccar\gotoxy.h
+
+1718982627 source:c:\users\lucia\desktop\rentaccar\rentaccar\alquileres.c
+	"alquileres.h"
+	"persona.h"
+	"pantallaIngreso.h"
+	"gotoxy.h"
+
+1718982765 c:\users\lucia\desktop\rentaccar\rentaccar\alquileres.h
+	"includess.h"
+	"vehiculos.h"
+
+1718982603 c:\users\lucia\desktop\rentaccar\rentaccar\vehiculos.h
+	"includess.h"
+	"persona.h"
+
+1718733559 source:c:\users\lucia\desktop\rentaccar\rentaccar\gotoxy.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1718982750 source:c:\users\lucia\desktop\rentaccar\rentaccar\menureportesestadisticas.c
+	"menuReportesEstadisticas.h"
+	"includess.h"
+	"reportes_estadisticas.h"
+	"gotoxy.h"
+	"pantallaIngreso.h"
+
+1718982782 c:\users\lucia\desktop\rentaccar\rentaccar\reportes_estadisticas.h
+	"includess.h"
+	"alquileres.h"
+	"persona.h"
+	"vehiculos.h"
+
+1718982563 c:\users\lucia\desktop\rentaccar\rentaccar\menureportesestadisticas.h
+	"includess.h"
+	"persona.h"
+
+1718982962 source:c:\users\lucia\desktop\rentaccar\rentaccar\reportes_estadisticas.c
+	"reportes_estadisticas.h"
+	"pantallaIngreso.h"
+	"gotoxy.h"
+
+1718983043 source:c:\users\lucia\desktop\rentaccar\rentaccar\vehiculos.c
+	"vehiculos.h"
+	"gotoxy.h"
+	"pantallaIngreso.h"
+
+1718982336 c:\users\lucia\desktop\rentaccar\rentaccar\includess.h
+	<string.h>
+	<conio.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
 

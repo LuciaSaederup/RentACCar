@@ -1,12 +1,9 @@
-#ifndef ALQUILERES_H_INCLUDED
-#define ALQUILERES_H_INCLUDED
-#include <string.h>
-#include <conio.h>
-#define ESC 27
-#include "vehiculos.h"
-#include "persona.h"
-#define RUTAALQUILERES "Alquileres.bin"
+#ifndef ALQUILER_H_INCLUDED
+#define ALQUILER_H_INCLUDED
 
+
+#include "includess.h"
+#include "vehiculos.h"
 
 
 typedef struct
@@ -29,13 +26,20 @@ typedef struct
 
 } Alquiler;
 
+
+
 void cargaUnAlquiler();
-void regitrarAlquier();
-void muestraUnAlquiler(Alquiler alquiler);
 void mostrarAlquieres();
+void muestraUnAlquiler(Alquiler a);
 void mostrarAlquilerPorFecha();
 Vehiculo verListaVehiculosDisponiblesySeleccionar();
 void confirmarAlquiler(Alquiler alquiler);
-void menuAlquileresCliente(char rol);
-void menuAlquileresAdmin(char rol);
-#endif // ALQUILERES_H_INCLUDED
+void menuAlquileresCliente(Persona* persona);
+void menuAlquileresAdmin(Persona* persona);
+Alquiler* leerArchivoAlquileres(int* cantidad);
+
+
+
+
+
+#endif // ALQUILER_H_INCLUDED

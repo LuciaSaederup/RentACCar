@@ -1,22 +1,16 @@
-#ifndef VEHICULOS_H_INCLUDED
-#define VEHICULOS_H_INCLUDED
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
-#define ESC 27
-#define RUTAVEHICULOS "Vehiculos.bin"
-#define MAX_TIPO_VEHIC 20
-#define RUTAVEHICULOSTEMPORAL "VehiculosTemporal.bin"
+#ifndef VEHICULO_H_INCLUDED
+#define VEHICULO_H_INCLUDED
 
-//Estructura: Patente
+#include "includess.h"
+#include "persona.h"
+
+
 typedef struct
 {
-    char letras[3];
-    char numeros[3];
+    char letras[MAX_LETRAS_PATENTE];
+    char numeros[MAX_NUMEROS_PATENTE];
 } Patente;
 
-//Estructura: Vehiculo
 
 typedef struct
 {
@@ -27,27 +21,24 @@ typedef struct
     float precioDeAlquilerDiario;
     char tipoVehiculo[MAX_TIPO_VEHIC];
     Patente patente;
-
-// 1-Auto,  2-Camioneta, 3-Utilitario
-
     int disponibilidad;
 
-// 1-disponible, 0-no disponible
 } Vehiculo;
 
-void menuVehiculos(char rol);
+void menuVehiculos(Persona* persona);
 void cargaUnVehiculo();
 void muestraVehiculosDisponibles();
 void muestraVehiculo(Vehiculo vehiculo);
 void modificarVehiculo();
 void busquedaPorPatente();
-Vehiculo buscarPatente(char patente);
+Vehiculo buscarPatente(Patente patente);
 Vehiculo* leerArchVehiculos(int* cantidad);
 int validarLetrasPatente(Patente patente);
-int validarNumerosPatente(Patente patente);
 void ingresarTipoVehiculo(char* tipo);
 void confirmarCambiosVehiculo(Vehiculo vehiculo);
-int borrarPorPatente(char patente);
-
-
-#endif // VEHICULOS_H_INCLUDED
+int borrarPorPatente(Patente patente);
+int validarNumerosPatente(Patente patente);
+int modificar_registro_vehiculo ( Vehiculo vehiculo);
+int compararPatentes(Patente p1, Patente p2);
+void borrarVehiculo();
+#endif // VEHICULO_H_INCLUDED

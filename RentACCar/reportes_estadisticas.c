@@ -1,30 +1,23 @@
+
 #include "reportes_estadisticas.h"
-#include "menuReportesEstadisticas.h"
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
+
+#include "pantallaIngreso.h"
 #include "gotoxy.h"
-#include "persona.h"
-#include "vehiculos.h"
-#define ANIOACTUAL 2024
-#define RUTAALQUILERES "Alquileres.bin"
-#define RUTAVEHICULOS "Vehiculos.bin"
 
-
-void calcularIngresosEnMes() {
+void calcularIngresosEnMes(Persona* persona) {
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
+
     int mes, anio;
 
     int cantidadAlquileres;
     Alquiler* alquileres;
-    alquileres = leerArchAlquileres(&cantidadAlquileres);
+    alquileres = leerArchivoAlquileres(&cantidadAlquileres);
     float ingresosTotales = 0;
-
-    gotoxy(30, 5);
+    imprimirTitulo("Ingresos en mes");
+    gotoxy(30, 8);
     printf("Ingrese mes y anio (MM AAAA): ");
-    gotoxy(70, 5);
+    gotoxy(70, 8);
     scanf("%d %d", &mes, &anio);
 
     for (int i = 0; i < cantidadAlquileres; i++) {
@@ -33,16 +26,17 @@ void calcularIngresosEnMes() {
         }
     }
 
-        gotoxy(30, 6);
+        gotoxy(30, 9);
         printf("Ingresos en %02d/%d: %.2f\n", mes, anio, ingresosTotales);
         Sleep(1500);
-        mostrarMenuReportesYEstadisticas("A");
+        system("cls");
+
 }
 
 void calcularAlquilerMayorIngreso() {
     int cantidadAlquileres;
     Alquiler* alquileres;
-    alquileres = leerArchAlquileres(&cantidadAlquileres);
+    alquileres = leerArchivoAlquileres(&cantidadAlquileres);
     int opcion;
 
     Alquiler alquilerMayorIngreso = alquileres[0];
@@ -56,11 +50,14 @@ void calcularAlquilerMayorIngreso() {
     system("cls");
     dibujarCuadro(25, 3, 100, 30);
     gotoxy(30,5);
-    char patente = strcat(alquilerMayorIngreso.vehiculo.patente.letras, alquilerMayorIngreso.vehiculo.patente.numeros);
-    printf("Alquiler con mayor ingreso: Fecha Inicio: %d/%d/%d, Patente: %s, Precio Total: %.2f\n",
-           alquilerMayorIngreso.fechaInicio.dia, alquilerMayorIngreso.fechaInicio.mes, alquilerMayorIngreso.fechaInicio.anio,
-           patente, alquilerMayorIngreso.precioTotal);
+    printf("Alquiler con mayor ingreso:");
     gotoxy(30,6);
+    printf("Fecha Inicio: %d/%d/%d", alquilerMayorIngreso.fechaInicio.dia, alquilerMayorIngreso.fechaInicio.mes, alquilerMayorIngreso.fechaInicio.anio);
+    gotoxy(30,7);
+    printf("Patente: %s", alquilerMayorIngreso.patente.letras);
+    gotoxy(30,8);
+    printf("Precio Total: %.2f\n",alquilerMayorIngreso.precioTotal);
+    gotoxy(30,10);
     printf("Si desea salir presione ESC");
     gotoxy(30,7);
     opcion = getch();
@@ -87,7 +84,6 @@ void verVehiculosDisponiblesRecientes() {
     imprimirVehiculosRecientes(vehiculosRecientes, cantidadRecientes);
 }
 
-
 void ordenarVehiculosPorAnio(Vehiculo* vehiculos, int cantidadVehiculos) {
     for (int i = 0; i < cantidadVehiculos - 1; i++) {
         for (int j = i + 1; j < cantidadVehiculos; j++) {
@@ -109,21 +105,20 @@ void imprimirVehiculosRecientes(Vehiculo* vehiculos, int cantidadVehiculos) {
     int num_opciones = cantidad;
     int opcion = 0;
     char tecla;
-    int i =20;
-    int f = 9;
+
     dibujarCuadro(25, 3, 100, 30);
 
     do{
         for (int j = 0; j < num_opciones; j++) {
-            gotoxy(i, f + j);
+            gotoxy(30, 9 + j);
             if (j == opcion) {
-                printf("> ");
+                printf(">");
             } else {
-                printf("  ");
+                printf(" ");
             }
 
             if(arregloVehiculos[j].disponibilidad==1){
-                printf("Marca: %s, Modelo: %s, precio %d\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
+                printf(" Marca: %s, Modelo: %s, precio %.2f\n", arregloVehiculos[j].marca, arregloVehiculos[j].modelo, arregloVehiculos[j].precioDeAlquilerDiario);
 
             }
         }
@@ -145,13 +140,11 @@ void imprimirVehiculosRecientes(Vehiculo* vehiculos, int cantidadVehiculos) {
 
 }
 
-
-
 void verAlquileresPorCliente() {
 
     int cantidadAlquileres;
     Alquiler* alquileres;
-    alquileres = leerArchAlquileres(&cantidadAlquileres);
+    alquileres = leerArchivoAlquileres(&cantidadAlquileres);
     char dni[8];
 
     system("cls");
@@ -167,7 +160,7 @@ void verAlquileresPorCliente() {
 
     for (int i = 0; i < cantidadAlquileres; i++) {
         if (strcmp(alquileres[i].persona.dni, dni)) {
-            char patente = strcat(alquileres[i].vehiculo.patente.letras,alquileres[i].vehiculo.patente.numeros);
+            char* patente = strcat(alquileres[i].vehiculo.patente.letras,alquileres[i].vehiculo.patente.numeros);
             gotoxy(30, 7+i);
             printf("  %i/%i/%i. ",alquileres[i].fechaInicio.dia, alquileres[i].fechaInicio.mes, alquileres[i].fechaInicio.anio);
             printf("   %s. ",patente);
@@ -178,49 +171,7 @@ void verAlquileresPorCliente() {
 }
 
 
-Alquiler* leerArchAlquileres(int* cantidad)
-{
-    FILE* archivoAlqui= fopen(RUTAALQUILERES, "rb");
-    int i = 0;
-    if(!archivoAlqui)
-    {
-        system("cls");
-        dibujarCuadro(25, 3, 100, 30);
-        setColorError();
-        gotoxy(30,5);
-        printf("\nHubo un error al abrir el archivo");
-    }
-    else
-    {
-        fseek(archivoAlqui, 0L, SEEK_END);
-        long cantidadBytes = ftell(archivoAlqui);
-        int cantidadEnArchivo = cantidadBytes / sizeof(Alquiler);
-        Sleep(1500);
 
-        fseek(archivoAlqui, 0L, SEEK_SET);
-        Alquiler *arregloAlquileres;
-        arregloAlquileres = (Alquiler*) malloc(cantidadEnArchivo * sizeof(Alquiler));
-
-        if (arregloAlquileres == NULL) {
-            system("cls");
-            dibujarCuadro(25, 3, 100, 30);
-            setColorError();
-            gotoxy(30,5);
-            printf("No se pudo asignar memoria.\n");
-            fclose(archivoAlqui);
-            return NULL;
-        }
-
-        for (int i = 0; i < cantidadEnArchivo; i++) {
-            fread(&arregloAlquileres[i], sizeof(Alquiler), 1, archivoAlqui);
-        }
-
-        *cantidad = cantidadEnArchivo;
-        fclose(archivoAlqui);
-        return arregloAlquileres;
-
-        }
-}
 
 
 

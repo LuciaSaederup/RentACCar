@@ -1,12 +1,11 @@
-//Librerias
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
-#include <windows.h>
-#include "login.h"
+#include "pantallaIngreso.h"
+
+#include "vehiculos.h"
 #include "gotoxy.h"
+#include "alquileres.h"
 #include "menuReportesEstadisticas.h"
+#include "pantallaIngreso.h"
+
 
 
 void setColor(int textColor, int bgColor) {
@@ -16,12 +15,13 @@ void setColor(int textColor, int bgColor) {
 }
 
 void setColorError(){
-    setColor(4,0);
+    setColor(7,4);
 }
 
 void setColorExito(){
-    setColor(2,7);
+    setColor(7,2);
 }
+
 
 void setColorGral(){
     setColor(7,3);
@@ -48,7 +48,10 @@ void dibujarCuadro(int x1, int y1, int x2, int y2) {
     gotoxy(x2, y2); printf("+");
 }
 
-void pantallaBienvenida() {
+void pantallaBienvenida()
+{
+    while (1 == 1)
+    {
      system("cls");
      setColorGral();
     int opcion = 0;
@@ -85,138 +88,145 @@ void pantallaBienvenida() {
         }
     } while (tecla != 13);
 
-    if (opcion == 0) {
-        system("cls");
-        iniciarSesion();
-    } else {
-        system("cls");
-        registrarPersona();
-    }
-}
 
-void menuPrincipal(char rol) {
-    int opcion = 0;
-    int num_opcionesClientes = 4;
-    int num_opcionesAdmin = 6;
-    char tecla;
-    system("cls");
-    setColorGral();
-    dibujarCuadro(25, 3, 100, 30);
-
-    imprimirTitulo("Menu Principal");
-
-    if (rol == 'C') {
-
-        do {
-            int i = 0;
-            for (int i = 0; i < num_opcionesClientes; i++) {
-                gotoxy(40, 9 + i * 2);
-
-                if (i == opcion) {
-                    printf(">");
-                } else {
-                    printf(" ");
-                }
-                if (i == 0) {
-                    printf(" Vehiculos\n");
-                } else if(i == 1) {
-                    printf(" Personas\n");
-                }else if(i==3){
-                    printf(" Alquileres\n");
-                }else if(i==4){
-                    printf(" Salir");
-                }
+        if (opcion == 0)
+            {
+            system("cls");
+            iniciarSesion();
             }
-            tecla = getch();
-
-            switch (tecla) {
-                case 72:
-                    opcion = (opcion - 1 + num_opcionesClientes) % num_opcionesClientes;
-                    break;
-                case 80:
-                    opcion = (opcion + 1) % num_opcionesClientes;
-                    break;
+        else
+            {
+            system("cls");
+            registrarPersona();
             }
-         }while (tecla != 13);
-
-    switch (opcion) {
-        case 0:
-            menuVehiculos("C");
-            break;
-        case 1:
-            menuPersonasCliente("C");
-            break;
-        case 2:
-            menuAlquileresCliente("C");
-        case 3:
-            pantallaBienvenida();
-        default:
-            printf("Esta opcion no es válida");
-            break;
         }
 
-    } else{
-        do {
-            int i = 0;
-            gotoxy(30, 5);
-            for (int i = 0; i < num_opcionesAdmin; i++) {
-                    gotoxy(30, 9 + i * 2);
+}
+
+void menuPrincipal(Persona* persona) {
+
+    while(1==1){
+        int opcion = 0;
+        int num_opcionesClientes = 4;
+        int num_opcionesAdmin = 6;
+        char tecla;
+        system("cls");
+        setColorGral();
+        dibujarCuadro(25, 3, 100, 30);
+
+        imprimirTitulo("Menu Principal");
+
+        if (persona->rol == 'C') {
+
+            do {
+                for (int i = 0; i < num_opcionesClientes; i++) {
+                    gotoxy(40, 9 + i * 2);
 
                     if (i == opcion) {
-                        printf("> ");
+                        printf(">");
                     } else {
-                        printf("  ");
+                        printf(" ");
                     }
                     if (i == 0) {
-                        printf("Vehiculos\n");
+                        printf(" Vehiculos\n");
                     } else if(i == 1) {
-                        printf("Personas\n");
+                        printf(" Personas\n");
                     }else if(i==2){
-                        printf("Alquileres\n");
+                        printf(" Alquileres\n");
                     }else if(i==3){
-                        printf("Reportes y estadisticas\n");
-                    }else if(i==4){
-                        printf("Salir");
-                    }else if(i==5){
-                        printf("");
+                        printf(" Salir");
                     }
                 }
-            tecla = getch();
+                tecla = getch();
 
-            switch (tecla) {
-                case 72:
-                    opcion = (opcion - 1 + num_opcionesAdmin) % num_opcionesAdmin;
-                    break;
-                case 80:
-                    opcion = (opcion + 1) % num_opcionesAdmin;
-                    break;
-            }
-        }while (tecla != 13);
+                switch (tecla) {
+                    case 72:
+                        opcion = (opcion - 1 + num_opcionesClientes) % num_opcionesClientes;
+                        break;
+                    case 80:
+                        opcion = (opcion + 1) % num_opcionesClientes;
+                        break;
+                }
+             }while (tecla != 13);
 
-            switch (opcion) {
-                case 0:
-                    menuVehiculos("A");
-                    break;
-                case 1:
-                    menuPersonasAdmin("A");
-                    break;
-                case 2:
-                    menuAlquileresAdmin("A");
-                    break;
-                case 3:
-                    mostrarMenuReportesYEstadisticas("A");
-                    break;
-                case 4:
-                    pantallaBienvenida();
-                    break;
-                case 5:
-                    noTocar();
-                    break;
-                default:
-                    system("cls");
+        switch (opcion) {
+            case 0:
+                menuVehiculos(persona);
+                break;
+            case 1:
+                menuPersonasCliente(persona);
+                break;
+            case 2:
+                menuAlquileresCliente(persona);
+            case 3:
+                pantallaBienvenida();
+            default:
                 printf("Esta opcion no es válida");
-                    break;
+                break;
             }
+
+        } else{
+            do {
+                gotoxy(30, 5);
+                for (int i = 0; i < num_opcionesAdmin; i++) {
+                        gotoxy(30, 9 + i * 2);
+
+                        if (i == opcion) {
+                            printf(">");
+                        } else {
+                            printf(" ");
+                        }
+                        if (i == 0) {
+                            printf(" Vehiculos\n");
+                        } else if(i == 1) {
+                            printf(" Personas\n");
+                        }else if(i==2){
+                            printf(" Alquileres\n");
+                        }else if(i==3){
+                            printf(" Reportes y estadisticas\n");
+                        }else if(i==4){
+                            printf(" Salir");
+                        }else if(i==5){
+                            printf(" ");
+                        }
+                    }
+                tecla = getch();
+
+                switch (tecla) {
+                    case 72:
+                        opcion = (opcion - 1 + num_opcionesAdmin) % num_opcionesAdmin;
+                        break;
+                    case 80:
+                        opcion = (opcion + 1) % num_opcionesAdmin;
+                        break;
+                }
+            }while (tecla != 13);
+
+                switch (opcion) {
+                    case 0:
+                        menuVehiculos(persona);
+                        break;
+                    case 1:
+                        menuPersonasAdmin(persona);
+                        break;
+                    case 2:
+                        menuAlquileresAdmin(persona);
+                        break;
+                    case 3:
+                        mostrarMenuReportesYEstadisticas(persona);
+                        break;
+                    case 4:
+                        return;
+                    case 5:
+                        noTocar();
+                        break;
+                    default:
+                        system("cls");
+                    printf("Esta opcion no es válida");
+                        break;
+                }
+
+        }
 
     }
 

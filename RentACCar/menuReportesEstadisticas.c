@@ -1,19 +1,14 @@
-#include "reportes_estadisticas.h"
+
 #include "menuReportesEstadisticas.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "pantallaIngreso.h"
-#include "vehiculos.h"
-#define ANIOACTUAL 2024
+
+#include "includess.h"
+#include "reportes_estadisticas.h"
 #include "gotoxy.h"
-//Librerias
-
-#include <string.h>
-#include <conio.h>
-#include <windows.h>
+#include "pantallaIngreso.h"
 
 
-void mostrarMenuReportesYEstadisticas(char rol)
+
+void mostrarMenuReportesYEstadisticas(Persona* persona)
 {
      system("cls");
     setColorGral();
@@ -24,8 +19,6 @@ void mostrarMenuReportesYEstadisticas(char rol)
      dibujarCuadro(25, 3, 100, 30);
     do
     {
-
-        int i = 0;
         gotoxy(30, 9);
         for (int i = 0; i < num_opciones; i++)
         {
@@ -39,16 +32,12 @@ void mostrarMenuReportesYEstadisticas(char rol)
             {
                 printf(" ");
             }
-            if(i==0){
-               printf(" Calcular ingresos en un mes\n");
-            }else if(i ==1){
-                printf(" Calcular alquiler con mayor ingreso\n");
-            }else if(i==2){
-                printf(" Ver vehiculos disponibles con menos de 5 años\n");
-            }else if(i==3){
-                printf(" Ver listado de alquileres por cliente\n");
-            }else if(i==4){
-                printf(" Volver atras");
+            switch(i){
+            case 0:printf(" Calcular ingresos en un mes\n");break;
+            case 1:printf(" Calcular alquiler con mayor ingreso\n");break;
+            case 2:printf(" Ver vehiculos disponibles con menos de 5 años\n");break;
+            case 3:printf(" Ver listado de alquileres por cliente\n");break;
+            case 4:printf(" Volver al menu anterior");break;
             }
         }
         tecla = getch();
@@ -68,31 +57,29 @@ void mostrarMenuReportesYEstadisticas(char rol)
         {
             case 0:
             {
-                calcularIngresosEnMes();
+                calcularIngresosEnMes(persona);
                 break;
             }
             case 1:
             {
-                calcularAlquilerMayorIngreso();
+                calcularAlquilerMayorIngreso(persona);
                 break;
             }
             case 2:
             {
-                verVehiculosDisponiblesRecientes();
+                verVehiculosDisponiblesRecientes(persona);
                 break;
             }
             case 3:
             {
-                verAlquileresPorCliente();
+                verAlquileresPorCliente(persona);
                 break;
             }
             case 4:
-                menuPrincipal(rol);
+                return;
             default:
                 printf("Esta opcion no es válida");
                 break;
         }
 
 }
-
-
